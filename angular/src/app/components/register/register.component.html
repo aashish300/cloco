@@ -1,0 +1,67 @@
+<div class="login-card">
+  <div class="brand">
+    <div class="brand-logo"></div>
+    <h1>Welcome back</h1>
+    <p>Enter your credentials to access your account</p>
+  </div>
+
+  <form id="loginForm">
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input
+        type="text"
+        id="firstName"
+        placeholder="Enter your name"
+      >
+    </div>
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input
+        type="text"
+        id="lastName"
+        placeholder="Enter your name"
+      >
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        placeholder="Enter your email"
+        autocomplete="email"
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        placeholder="Enter your password"
+        autocomplete="current-password"
+      >
+    </div>
+    <div class="form-group">
+      <label for="number">Phone Number</label>
+      <input
+        type="number"
+        id="number"
+        placeholder="Enter your number"
+      >
+    </div>
+
+    <div>
+      <select>
+
+      </select>
+    </div>
+
+    <button type="submit" class="login-btn" id="loginButton">
+      Sign up
+    </button>
+  </form>
+
+  <div class="signup-link">
+    <p>Don't have an account? <a [routerLink]="['/login']">Sign in</a></p>
+  </div>
+</div>
