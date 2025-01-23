@@ -5,7 +5,6 @@ import com.demo.artist_management_system.Model.UserEntity;
 import com.demo.artist_management_system.Security.Auth.JwtGenerator;
 import com.demo.artist_management_system.Security.Model.JwtUser;
 import com.demo.artist_management_system.Service.IUserService;
-import com.demo.artist_management_system.Utils.Enum.Role;
 import com.demo.artist_management_system.Utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

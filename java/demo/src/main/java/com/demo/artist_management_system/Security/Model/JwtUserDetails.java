@@ -9,10 +9,10 @@ public class JwtUserDetails implements UserDetails {
 
     private String userName;
     private String token;
-    private Long id;
+    private int id;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public JwtUserDetails(String userName, String token, Long id, Collection<? extends GrantedAuthority> authorities) {
+    public JwtUserDetails(String userName, String token, int id, Collection<? extends GrantedAuthority> authorities) {
         this.userName = userName;
         this.token = token;
         this.id = id;
@@ -62,7 +62,7 @@ public class JwtUserDetails implements UserDetails {
         return token;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 }

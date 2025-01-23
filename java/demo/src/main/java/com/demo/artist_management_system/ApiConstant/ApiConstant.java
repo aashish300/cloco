@@ -1,4 +1,4 @@
-package com.example.demo.ApiConstant;
+package com.demo.artist_management_system.ApiConstant;
 
 public interface ApiConstant {
     String API = "/api";
@@ -6,4 +6,6 @@ public interface ApiConstant {
     //common
     String FINDALL = "/findAll";
     String FINDBYID = "/{id}";
+
+    String LOGIN = "/login";
 }
