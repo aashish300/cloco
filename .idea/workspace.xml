@@ -4,42 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="be172db9-8a4c-45fa-8574-cd33f64eeb22" name="Changes" comment="added angular project">
-      <change afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Controller/LoginController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Exception/GlobalException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Exception/NotAcceptableException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Exception/NotFoundException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Model/Artist.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Model/Music.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Repository/BaseRepository/IBaseRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Repository/BaseRepository/Impl/BaseRepositoryImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Repository/IUserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Repository/Impl/UserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Security/Auth/CustomAccessDeniedHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Security/Auth/JwtAuthenticationEntryPoint.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Security/Auth/JwtAuthenticationProvider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Security/Auth/JwtAuthenticationTokenFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Security/Auth/JwtGenerator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Security/Auth/JwtSuccessHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Security/Auth/JwtValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Security/Config/JwtSecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Security/Model/JwtAuthenticationToken.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Security/Model/JwtUser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Security/Model/JwtUserDetails.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Service/IUserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/example/demo/ApiConstant/ApiConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/ApiConstant/ApiConstant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/example/demo/Configuration/GlobalConfigurations.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Configuration/GlobalConfigurations.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/example/demo/DemoApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/DemoApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/example/demo/Model/BaseEntity/BaseEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Model/BaseEntity/BaseEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/example/demo/Model/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Model/UserEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/example/demo/Repository/IUserRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/example/demo/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/example/demo/Utils/CustomEntityListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Utils/CustomEntityListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/example/demo/Utils/Enum/DBConstantsEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Utils/Enum/DBConstantsEnum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/example/demo/Utils/Enum/RoleEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Utils/Enum/RoleEnum.java" afterDir="false" />
-    </list>
+    <list default="true" id="be172db9-8a4c-45fa-8574-cd33f64eeb22" name="Changes" comment="added angular project" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -66,29 +31,29 @@
     <option name="openDirectoriesWithSingleClick" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven.demo [org.apache.maven.plugins:maven-clean-plugin:3.4.0:clean].executor": "Run",
-    "Maven.demo [org.apache.maven.plugins:maven-install-plugin:3.1.3:install].executor": "Run",
-    "Maven.demo [org.apache.maven.plugins:maven-jar-plugin:3.4.2:jar].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.DemoApplication.executor": "Run",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/aashi/OneDrive/Desktop/Code/cloco",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven.demo [org.apache.maven.plugins:maven-clean-plugin:3.4.0:clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.demo [org.apache.maven.plugins:maven-install-plugin:3.1.3:install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.demo [org.apache.maven.plugins:maven-jar-plugin:3.4.2:jar].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.DemoApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/aashi/OneDrive/Desktop/Code/cloco&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\aashi\OneDrive\Desktop\Code\cloco\java\demo\src\main\java\com\demo\artist_management_system" />
@@ -124,6 +89,7 @@
       <updated>1737390441166</updated>
       <workItem from="1737390442333" duration="4554000" />
       <workItem from="1737570860731" duration="40000" />
+      <workItem from="1737570977598" duration="655000" />
     </task>
     <task id="LOCAL-00001" summary="added angular project">
       <option name="closed" value="true" />

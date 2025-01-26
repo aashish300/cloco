@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+//@import "primeng/resources/themes/lara-light-blue/theme.css";
+//@import "primeng/resources/primeng.css";
 * {
   margin: 0;
   padding: 0;
@@ -15,5 +17,42 @@ body {
   padding: 20px;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+p-calendar {
+  width: 100%;
+  position: relative;
+  .p-calendar {
+    width: 100%;
+    height: 40px;
+    input {
+      width: 100%;
+      border: 2px solid #e1e1e1;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    //button {
+    //  position: absolute;
+    //  left: 0;
+    //  top: 10px;
+    //  background: transparent;
+    //  border: none;
+    //  cursor: pointer;
+    //  color: #774ea7;
+    //}
+  }
+}
+
+.p-dropdown {
+  width: 100%;
+  border: 1px solid #774ea740;
+  border-radius: 8px;
+  outline: 0;
+  background-color: #ffffff;
+  height: 40px;
+
+  .p-dropdown-label{
+    height: 100%;
+    padding: 10px;
+  }
+}
+

@@ -15,7 +15,7 @@
       height: 50px;
       border-radius: 50%;
       margin: 0 auto 1rem;
-      //background-image: url("../../../assets/cloco.svg");
+      background-image: url("../../../assets/cloco.svg");
     }
   }
 }
@@ -37,6 +37,7 @@
 .form_group_container {
   display: flex;
   gap: 20px;
+  justify-content: space-between;
 }
 
 .form-group {

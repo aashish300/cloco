@@ -1,17 +1,18 @@
 <div class="login-card">
   <div class="brand">
     <div class="brand-logo"></div>
-    <h1>Welcome back</h1>
+    <h1>Welcome</h1>
     <p>Enter your credentials to access your account</p>
   </div>
 
-  <form id="loginForm">
+  <form id="loginForm" [formGroup]="registerForm">
     <div class="form_group_container">
       <div class="form-group">
         <label for="firstName">First Name</label>
         <input
           type="text"
           id="firstName"
+          formControlName="firstName"
           placeholder="Enter your name"
         >
       </div>
@@ -20,6 +21,7 @@
         <input
           type="text"
           id="lastName"
+          formControlName="lastName"
           placeholder="Enter your name"
         >
       </div>
@@ -29,6 +31,7 @@
       <input
         type="email"
         id="email"
+        formArrayName="email"
         placeholder="Enter your email"
         autocomplete="email"
       >
@@ -39,6 +42,7 @@
       <input
         type="password"
         id="password"
+        formArrayName="password"
         placeholder="Enter your password"
         autocomplete="current-password"
       >
@@ -48,39 +52,39 @@
       <input
         type="number"
         id="number"
+        formArrayName="phoneNumber"
         placeholder="Enter your number"
       >
     </div>
 
-    <div class="form-group">
-      <mat-form-field>
-        <mat-label>Gender</mat-label>
-        <mat-select>
-          <mat-option value="M">Male</mat-option>
-          <mat-option value="F">Female</mat-option>
-          <mat-option value="O">Other</mat-option>
-        </mat-select>
-      </mat-form-field>
+    <div class="form_group_container">
+      <div class="form-group">
+        <label>Gender</label>
+        <p-dropdown
+          [options]="genders"
+          formControlName="gender"
+          placeholder="Select Gender"
+          optionLabel="label"
+          optionValue="value"
+        />
+      </div>
+      <div class="form-group">
+        <label>Date of Birth</label>
+        <p-calendar
+          formControlName="dateOfBirth"
+          showIcon="true"/>
+      </div>
     </div>
 
     <div class="form-group">
       <label for="address">Address</label>
       <input
-      type="text"
-      id="address"
-      placeholder="Enter your address">
+        type="text"
+        id="address"
+        formControlName="address"
+        placeholder="Enter your address">
     </div>
 
-    <div class="form-group">
-      <label>Date of Birth</label>
-      <mat-form-field class="example-full-width">
-        <mat-label>Choose a date</mat-label>
-        <input matInput [max]="presentDate" [matDatepicker]="picker">
-        <mat-hint>MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-    </div>
 
     <button type="submit" class="login-btn" id="loginButton">
       Sign up
