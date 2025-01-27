@@ -6,7 +6,6 @@ import com.demo.artist_management_system.Security.Auth.JwtGenerator;
 import com.demo.artist_management_system.Security.Model.JwtUser;
 import com.demo.artist_management_system.Service.IUserService;
 import com.demo.artist_management_system.Utils.StringUtils;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +20,8 @@ import java.util.List;
 @RestController
 public class LoginController {
 
-    private IUserService userService;
-    private JwtGenerator jwtGenerator;
+    private final IUserService userService;
+    private final JwtGenerator jwtGenerator;
 
     @Autowired
     public LoginController(IUserService userService, JwtGenerator jwtGenerator) {

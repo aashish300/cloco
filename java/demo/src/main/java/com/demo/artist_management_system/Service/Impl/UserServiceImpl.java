@@ -4,7 +4,6 @@ import com.demo.artist_management_system.Model.UserEntity;
 import com.demo.artist_management_system.Repository.IUserRepository;
 import com.demo.artist_management_system.Service.IUserService;
 import jakarta.transaction.Transactional;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
