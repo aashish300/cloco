@@ -14,19 +14,19 @@ import org.springframework.security.config.annotation.web.configurers.HeadersCon
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 
 @EnableMethodSecurity()
 @EnableWebSecurity
-@Configuration
+@Component
 public class JwtSecurityConfig{
 
-    @Autowired
     private JwtAuthenticationProvider jwtAuthenticationProvider;
-    @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
+    @Autowired
     public JwtSecurityConfig(JwtAuthenticationProvider jwtAuthenticationProvider, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint) {
         this.jwtAuthenticationProvider = jwtAuthenticationProvider;
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
@@ -38,15 +38,15 @@ public class JwtSecurityConfig{
     }
 
     @Bean
-    public JwtAuthenticationTokenFilter authenticationTokenFilter() {
+    public JwtAuthenticationTokenFilter authenticationTokenFilter(AuthenticationManager authenticationManager) {
         JwtAuthenticationTokenFilter filter = new JwtAuthenticationTokenFilter();
-        filter.setAuthenticationManager(authenticationManager());
+        filter.setAuthenticationManager(authenticationManager);
         filter.setAuthenticationSuccessHandler(new JwtSuccessHandler());
         return filter;
     }
 
     @Bean
-    public SecurityFilterChain configure(HttpSecurity httpSecurity, CustomAccessDeniedHandler accessDeniedHandler) throws Exception {
+    public SecurityFilterChain configure(HttpSecurity httpSecurity, CustomAccessDeniedHandler accessDeniedHandler, JwtAuthenticationTokenFilter authenticationTokenFilter) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) ->
                         authorize.requestMatchers("/login","/register").permitAll().anyRequest().authenticated()
@@ -59,7 +59,7 @@ public class JwtSecurityConfig{
 
         httpSecurity.headers(header -> header.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
 
-        httpSecurity.addFilterBefore(authenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
     }
