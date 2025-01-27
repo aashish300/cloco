@@ -8,4 +8,5 @@ public interface ApiConstant {
     String FINDBYID = "/{id}";
 
     String LOGIN = "/login";
+    String REGISTER = "/register";
 }

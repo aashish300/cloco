@@ -6,6 +6,7 @@ import com.demo.artist_management_system.Security.Auth.JwtGenerator;
 import com.demo.artist_management_system.Security.Model.JwtUser;
 import com.demo.artist_management_system.Service.IUserService;
 import com.demo.artist_management_system.Utils.StringUtils;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,5 +58,17 @@ public class LoginController {
         } else {
             return new ResponseEntity<>("User not found.", HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE);
         }
+    }
+
+    @PostMapping(ApiConstant.REGISTER)
+    public ResponseEntity<String> register(@RequestBody UserEntity user) {
+        UserEntity userEntity = this.userService.findByEmail(user.getEmail());
+        if (userEntity != null) {
+            return new ResponseEntity<>("User already exist.", HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE);
+        }
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        this.userService.save(user);
+        return new ResponseEntity<>("User saved Successfully!!!", HttpStatus.OK);
     }
 }

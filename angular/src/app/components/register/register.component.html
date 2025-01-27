@@ -29,7 +29,6 @@
     <div class="form-group">
       <label for="email">Email</label>
       <input
-        type="email"
         id="email"
         formArrayName="email"
         placeholder="Enter your email"
@@ -72,6 +71,7 @@
         <label>Date of Birth</label>
         <p-calendar
           formControlName="dateOfBirth"
+
           showIcon="true"/>
       </div>
     </div>
@@ -86,7 +86,9 @@
     </div>
 
 
-    <button type="submit" class="login-btn" id="loginButton">
+    <button type="submit" class="login-btn" id="loginButton"
+            [class.disabled]="registerForm.invalid"
+    (click)="addUser()">
       Sign up
     </button>
   </form>

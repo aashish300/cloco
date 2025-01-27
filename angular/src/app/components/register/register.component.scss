@@ -15,7 +15,7 @@
       height: 50px;
       border-radius: 50%;
       margin: 0 auto 1rem;
-      background-image: url("../../../assets/cloco.svg");
+      //background-image: url("../../../assets/cloco.svg");
     }
   }
 }
@@ -155,4 +155,8 @@
 
 .shake {
   animation: shake 0.5s ease;
+}
+
+.disabled {
+  background-color: grey;
 }
