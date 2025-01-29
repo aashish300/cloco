@@ -1,14 +1,17 @@
 package artist_management_system.java.Repository.BaseRepository.Impl;
 
 //allowing operations to either succeed completely or roll back in case of an error
+
 import artist_management_system.java.Exception.NotAcceptableException;
 import artist_management_system.java.Model.BaseEntity.BaseEntity;
 import artist_management_system.java.Repository.BaseRepository.IBaseRepository;
 import jakarta.persistence.Id;
-import jakarta.transaction.Transactional;
+import jakarta.persistence.PersistenceContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -16,15 +19,13 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
-@Transactional
 public class BaseRepositoryImpl<T extends BaseEntity, ID extends Serializable> implements IBaseRepository<T, ID> {
 
-    private final JdbcTemplate jdbcTemplate;
+    protected JdbcTemplate jdbcTemplate;
     private Class<T> classType;
     private String tableName;
 
     public BaseRepositoryImpl(JdbcTemplate jdbcTemplate, Class<T> classType) {
-        this.jdbcTemplate = jdbcTemplate;
         this.classType = classType;
         this.tableName = this.classType.getSimpleName();
     }

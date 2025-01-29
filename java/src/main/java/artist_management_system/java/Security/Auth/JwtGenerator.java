@@ -19,7 +19,7 @@ public class JwtGenerator {
 
     public String generate(JwtUser jwtUser) {
         Claims claims = Jwts.claims()
-                .setSubject(jwtUser.getUserName());
+                .setSubject(jwtUser.getUserName()).build();
         claims.put("userId", String.valueOf(jwtUser.getId()));
         claims.put("roles", jwtUser.getRoles());
 

@@ -4,26 +4,26 @@ import artist_management_system.java.Model.UserEntity;
 import artist_management_system.java.Repository.BaseRepository.Impl.BaseRepositoryImpl;
 import artist_management_system.java.Repository.IUserRepository;
 import artist_management_system.java.Utils.Enum.Role;
+import jakarta.persistence.PersistenceContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserRepository extends BaseRepositoryImpl<UserEntity, Integer> implements IUserRepository {
+public class UserRepository extends BaseRepositoryImpl<UserEntity, Integer>  implements IUserRepository {
 
-    private final JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
-    private Class<UserEntity> userEntityClass;
-
-    public UserRepository(JdbcTemplate jdbcTemplate, Class<UserEntity> userEntityClass) {
-        super(jdbcTemplate, userEntityClass);
+    @Autowired
+    public UserRepository(JdbcTemplate jdbcTemplate) {
+        super(jdbcTemplate, UserEntity.class);
         this.jdbcTemplate = jdbcTemplate;
-        this.userEntityClass = userEntityClass;
     }
 
     @Override
     public UserEntity findByEmail(String email) {
-        String tableName = userEntityClass.getSimpleName();
+        String tableName = UserEntity.class.getSimpleName();
         String rawQuery = "SELECT * FROM " + tableName + " WHERE email = ?";
         try {
             return jdbcTemplate.queryForObject(rawQuery, new Object[]{email}, (rs, rowNum) -> {

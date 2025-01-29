@@ -18,7 +18,7 @@ public class JwtValidator {
         JwtUser jwtUser = new JwtUser();
 
         try {
-            Claims body = Jwts.parserBuilder()
+            Claims body = Jwts.parser()
                     .setSigningKey(Keys.hmacShaKeyFor(secretKey.getBytes()))
                     .build()
                     .parseClaimsJws(token)
