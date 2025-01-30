@@ -21,11 +21,21 @@ public class UserRepository extends BaseRepositoryImpl<UserEntity>  implements I
     }
 
     public int save(UserEntity user) {
-        String sql = "insert into users (username, password, role) values (?, ?, ?)";
+        String sql = "insert into tbl_user (first_name, last_name, email, password, phone, dob, gender, user_role, address," +
+                "token, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         return update(sql, new Object[]{
                 user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
                 user.getPassword(),
-                user.getRole()
+                user.getPhone(),
+                user.getDob(),
+                user.getGender(),
+                user.getRole().name(),
+                user.getAddress(),
+                user.getToken(),
+                user.getCreatedAt(),
+                user.getUpdatedAt(),
         });
     }
     @Override
