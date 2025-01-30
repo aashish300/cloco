@@ -9,8 +9,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 @MappedSuperclass
-@Getter
-@Setter
 public class BaseEntity implements Serializable {
 
     @Id

@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit{
       password: ['123',[Validators.required]],
       dateOfBirth: ['2000-01-01',[Validators.required]],
       gender: ['',[Validators.required]],
-      phoneNumber: ['9876543210',[Validators.required]],
+      phone: ['9876543210',[Validators.required]],
       address: ['gwarko',[Validators.required]]
     })
   }
@@ -56,6 +56,7 @@ export class RegisterComponent implements OnInit{
       .subscribe({
         next: res => {
           console.log(res);
+          alert(res)
         },
         error: err => {
           console.log(err)

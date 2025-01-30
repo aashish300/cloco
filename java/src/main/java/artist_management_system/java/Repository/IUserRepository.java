@@ -1,14 +1,14 @@
 package artist_management_system.java.Repository;
 
 import artist_management_system.java.Model.UserEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+
+import java.util.Optional;
 
 public interface IUserRepository {
 
-    UserEntity findByEmail(String email);
+    Optional<UserEntity> findByEmail(String email);
 
-    UserEntity save(UserEntity user);
+    int save(UserEntity user);
 
 //    Optional<UserEntity> findByEmail(String email);
 }

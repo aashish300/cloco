@@ -1,6 +1,6 @@
 export const ApiConst = {
 
-  SERVER_URL: 'http://localhost:8080/api',
+  SERVER_URL: 'localhost:8080',
 
   // authentication
   LOGIN: 'login',

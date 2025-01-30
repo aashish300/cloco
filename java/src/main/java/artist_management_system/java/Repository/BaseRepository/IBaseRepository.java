@@ -2,20 +2,16 @@ package artist_management_system.java.Repository.BaseRepository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.jdbc.core.RowMapper;
 
 import java.io.Serializable;
+import java.util.List;
 
 
 //serializable converts an object into a byte stream so it can be persisted to a file and sent over a network or stored in a database
-public interface IBaseRepository<T, ID extends Serializable> {
+public interface IBaseRepository<T> {
 
-    <S extends T> S save(S entity);
+    List<T> query(String sql, Object[] args, RowMapper<T> rowMapper);
 
-    <S extends T> S update(S entity);
-
-    T findById(ID id);
-
-    Page<T> findAll(Pageable pageable);
-
-    boolean deleteById(ID id);
+    int update(String sql, Object[] args);
 }

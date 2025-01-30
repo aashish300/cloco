@@ -10,39 +10,41 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Repository
-public class UserRepository extends BaseRepositoryImpl<UserEntity, Integer>  implements IUserRepository {
+public class UserRepository extends BaseRepositoryImpl<UserEntity>  implements IUserRepository {
 
-    private JdbcTemplate jdbcTemplate;
-
-    @Autowired
     public UserRepository(JdbcTemplate jdbcTemplate) {
-        super(jdbcTemplate, UserEntity.class);
-        this.jdbcTemplate = jdbcTemplate;
+        super(jdbcTemplate);
     }
 
+    public int save(UserEntity user) {
+        String sql = "insert into users (username, password, role) values (?, ?, ?)";
+        return update(sql, new Object[]{
+                user.getFirstName(),
+                user.getPassword(),
+                user.getRole()
+        });
+    }
     @Override
-    public UserEntity findByEmail(String email) {
-        String tableName = UserEntity.class.getSimpleName();
-        String rawQuery = "SELECT * FROM " + tableName + " WHERE email = ?";
-        try {
-            return jdbcTemplate.queryForObject(rawQuery, new Object[]{email}, (rs, rowNum) -> {
-                UserEntity user = new UserEntity();
-                user.setId(rs.getInt("id"));
-                user.setEmail(rs.getString("email"));
-                user.setFirstName(rs.getString("firstName"));
-                user.setLastName(rs.getString("lastName"));
-                user.setPassword(rs.getString("password"));
-                user.setRole(Role.valueOf(rs.getString("role")));
-                return user;
-            });
-        }catch (EmptyResultDataAccessException e) {
+    public Optional<UserEntity> findByEmail(String email) {
+//        String tableName = UserEntity.class.getSimpleName();
+//        String rawQuery = "SELECT * FROM " + tableName + " WHERE email = ?";
+//        try {
+//            return jdbcTemplate.query(rawQuery, new Object[]{email}, (rs, rowNum) -> {
+//                UserEntity user = new UserEntity();
+//                user.setId(rs.getInt("id"));
+//                user.setEmail(rs.getString("email"));
+//                user.setFirstName(rs.getString("firstName"));
+//                user.setLastName(rs.getString("lastName"));
+//                user.setPassword(rs.getString("password"));
+//                user.setRole(Role.valueOf(rs.getString("role")));
+//                return user;
+//            }).stream().findFirst();
+//        }catch (EmptyResultDataAccessException e) {
             return null;
-        }
-    }
-
-    @Override
-    public UserEntity save(UserEntity user) {
-        return null;
+//        }
     }
 }

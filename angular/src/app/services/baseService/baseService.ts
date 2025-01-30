@@ -1,11 +1,11 @@
 import {ApiConst} from "../../constants/ApiConst";
 import {HttpClient} from "@angular/common/http";
-import {catchError} from "rxjs";
-import {inject} from "@angular/core";
+import {catchError, Observable, of} from "rxjs";
+import {Injectable} from "@angular/core";
 
 
 @Injectable({
-  ProvidedIn: 'root'
+  providedIn: "root"
 })
 export class BaseService {
   private baseUrl: string = ApiConst.SERVER_URL;
@@ -13,7 +13,7 @@ export class BaseService {
   constructor(private http: HttpClient) { }
 
 
-  public postRequest(url: string, data: any, message) {
+  public postRequest<T>(url: string, data: any, message: string) {
     return this.http.post<T>(this.baseUrl + url, data).pipe(
       catchError(this.handleError<T>(null, message))
     );

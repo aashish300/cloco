@@ -2,15 +2,10 @@ package artist_management_system.java.Model;
 
 import artist_management_system.java.Model.BaseEntity.BaseEntity;
 import artist_management_system.java.Utils.Enum.Role;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import lombok.*;
+import jakarta.persistence.*;
 
 import java.util.Date;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "tbl_user")
 public class UserEntity extends BaseEntity {
@@ -36,7 +31,8 @@ public class UserEntity extends BaseEntity {
     @Column(name = "gender")
     private String gender;
 
-    @Column(name = "role")
+    @Column(name = "user_role")
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @Column(name = "address")

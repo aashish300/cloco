@@ -5,4 +5,5 @@ public enum Role {
     SUPER_ADMIN,
     ARTIST_MANAGER,
     ARTIST
+
 }

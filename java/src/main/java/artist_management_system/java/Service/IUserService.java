@@ -6,5 +6,5 @@ public interface IUserService {
 
     UserEntity findByEmail(String email);
 
-    UserEntity save(UserEntity user);
+    int save(UserEntity user);
 }
