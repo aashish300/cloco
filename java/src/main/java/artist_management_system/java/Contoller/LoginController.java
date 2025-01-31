@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class LoginController {
@@ -70,8 +71,10 @@ public class LoginController {
 
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        this.userService.save(user);
-
+        UserEntity userEntity1 = this.userService.save(user);
+        if (userEntity1 == null) {
+            return new ResponseEntity<>("User not registered", HttpStatus.CONFLICT);
+        }
         return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
     }
 }

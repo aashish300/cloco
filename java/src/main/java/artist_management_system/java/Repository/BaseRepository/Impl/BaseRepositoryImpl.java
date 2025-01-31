@@ -4,6 +4,7 @@ package artist_management_system.java.Repository.BaseRepository.Impl;
 
 import artist_management_system.java.Exception.NotAcceptableException;
 import artist_management_system.java.Model.BaseEntity.BaseEntity;
+import artist_management_system.java.Model.UserEntity;
 import artist_management_system.java.Repository.BaseRepository.IBaseRepository;
 import jakarta.persistence.Id;
 import jakarta.persistence.PersistenceContext;
@@ -19,6 +20,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class BaseRepositoryImpl<T extends BaseEntity> implements IBaseRepository<T> {
 
@@ -28,7 +30,7 @@ public class BaseRepositoryImpl<T extends BaseEntity> implements IBaseRepository
     public BaseRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-
+//
 //    @Override
 //    public <S extends T> S save(S entity) {
 //        String tableName = classType.getSimpleName();
@@ -68,10 +70,9 @@ public class BaseRepositoryImpl<T extends BaseEntity> implements IBaseRepository
 //            throw new NotAcceptableException("Couldn't save data!!!");
 //        }
 //    }
-//
+
 //    @Override
-//    public <S extends T> S update(S entity) {
-//        String tableName = classType.getSimpleName();
+//    public <S extends T> S update(String rawQuery, S entity) {
 //        Field[] fields = entity.getClass().getDeclaredFields();
 //        StringBuilder values = new StringBuilder();
 //        List<Object> params = new ArrayList<>();
@@ -101,7 +102,7 @@ public class BaseRepositoryImpl<T extends BaseEntity> implements IBaseRepository
 //            throw new NotAcceptableException("Couldn't save data!!!");
 //        }
 //    }
-//
+
 //    @Override
 //    public T findById(ID id) {
 //        return null;

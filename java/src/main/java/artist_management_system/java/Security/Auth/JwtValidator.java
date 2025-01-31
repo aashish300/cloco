@@ -18,11 +18,16 @@ public class JwtValidator {
         JwtUser jwtUser = new JwtUser();
 
         try {
-            Claims body = Jwts.parser()
+            Claims body = Jwts.parserBuilder()
                     .setSigningKey(Keys.hmacShaKeyFor(secretKey.getBytes()))
                     .build()
                     .parseClaimsJws(token)
                     .getBody();
+//            Claims body = Jwts.parser()
+//                    .setSigningKey(Keys.hmacShaKeyFor(secretKey.getBytes()))
+//                    .build()
+//                    .parseClaimsJws(token)
+//                    .getBody();
             jwtUser.setUserName(body.getSubject());
             jwtUser.setId(Integer.parseInt((String) body.get("userId")));
             jwtUser.setRoles((List<String>) body.get("roles"));

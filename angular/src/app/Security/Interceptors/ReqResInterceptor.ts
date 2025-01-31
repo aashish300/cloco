@@ -6,7 +6,13 @@ import {Observable} from "rxjs";
 export class ReqResInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // req.clone({setHeaders: })
+    req.clone({
+      setHeaders: {
+        'Content-Type': 'application/json',
+        'url': window.location.href
+      }
+    })
     return next.handle(req);
   }
 }
+

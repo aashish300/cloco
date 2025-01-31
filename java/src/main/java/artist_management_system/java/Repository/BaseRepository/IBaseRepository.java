@@ -1,5 +1,6 @@
 package artist_management_system.java.Repository.BaseRepository;
 
+import artist_management_system.java.Model.UserEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.RowMapper;
