@@ -5,56 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="be172db9-8a4c-45fa-8574-cd33f64eeb22" name="Changes" comment="added angular project">
+      <change afterPath="$PROJECT_DIR$/angular/src/app/constants/role.constant.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/angular/src/app/utils/globa.utils.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/java/src/main/java/artist_management_system/java/Configuration/CustomCorsConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_22_2025_11_59_PM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_22_2025_11_59_PM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/.idea/cloco.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/java/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/java/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/.gitattributes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/ApiConstant/ApiConstant.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Controller/LoginController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/DemoApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Exception/GlobalException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Exception/NotAcceptableException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Exception/NotFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Model/Artist.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Model/BaseEntity/BaseEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Model/Music.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Model/UserEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Repository/BaseRepository/IBaseRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Repository/BaseRepository/Impl/BaseRepositoryImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Repository/IUserRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Repository/Impl/UserRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Security/Auth/CustomAccessDeniedHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Security/Auth/JwtAuthenticationEntryPoint.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Security/Auth/JwtAuthenticationProvider.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Security/Auth/JwtAuthenticationTokenFilter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Security/Auth/JwtGenerator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Security/Auth/JwtSuccessHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Security/Auth/JwtValidator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Security/Config/JwtSecurityConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Security/Model/JwtAuthenticationToken.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Security/Model/JwtUser.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Security/Model/JwtUserDetails.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Service/IUserService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Service/Impl/UserServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Utils/Enum/Gender.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Utils/Enum/Genre.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Utils/Enum/Role.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Utils/SecurityUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/java/com/demo/artist_management_system/Utils/StringUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/demo/src/test/java/com/example/demo/DemoApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/src/app/components/login/login.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/angular/src/app/components/login/login.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/src/app/components/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/src/app/components/login/login.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/src/app/components/register/register.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/angular/src/app/components/register/register.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/src/app/components/register/register.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/src/app/components/register/register.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/src/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/angular/src/styles.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/java/src/main/java/artist_management_system/java/Repository/IUserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/src/main/java/artist_management_system/java/Repository/IUserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/java/src/main/java/artist_management_system/java/Repository/Impl/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/src/main/java/artist_management_system/java/Repository/Impl/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/java/src/main/java/artist_management_system/java/Security/Config/JwtSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/src/main/java/artist_management_system/java/Security/Config/JwtSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/java/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/java/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,13 +62,14 @@
     "com.codeium.enabled": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/aashi/OneDrive/Desktop/Code/cloco/java",
+    "last_opened_file_path": "C:/Users/aashi/OneDrive/Desktop/Code/cloco",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2024.3.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -146,6 +112,9 @@
       <workItem from="1738070079220" duration="708000" />
       <workItem from="1738070810132" duration="114000" />
       <workItem from="1738070969624" duration="102000" />
+      <workItem from="1738414663821" duration="70000" />
+      <workItem from="1738414922168" duration="42000" />
+      <workItem from="1738428688109" duration="44000" />
     </task>
     <task id="LOCAL-00001" summary="added angular project">
       <option name="closed" value="true" />

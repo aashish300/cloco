@@ -1,6 +1,7 @@
 package artist_management_system.java.Model;
 
 import artist_management_system.java.Model.BaseEntity.BaseEntity;
+import artist_management_system.java.Utils.Enum.Gender;
 import artist_management_system.java.Utils.Enum.Role;
 import artist_management_system.java.Utils.RoleConverter;
 import jakarta.persistence.*;
@@ -29,8 +30,9 @@ public class UserEntity extends BaseEntity {
     @Column(name = "dob")
     private Date dob;
 
-    @Column(name = "gender")
-    private String gender;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "gender", columnDefinition = "gender_enum")
+    private Gender gender;
 
 //    @Convert(converter = RoleConverter.class)
     @Enumerated(EnumType.STRING)
@@ -99,11 +101,11 @@ public class UserEntity extends BaseEntity {
         this.dob = dob;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 

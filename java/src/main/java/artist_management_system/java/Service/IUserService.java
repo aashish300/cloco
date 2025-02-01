@@ -10,4 +10,14 @@ public interface IUserService {
     UserEntity findByEmail(String email);
 
     UserEntity save(UserEntity user);
+
+    UserEntity findById(Integer id);
+
+    UserEntity update(UserEntity user);
+
+    boolean deleteById(Integer id);
+
+    List<UserEntity> findAllByPagination(Integer page, Integer size);
+
+    List<UserEntity> findAll();
 }

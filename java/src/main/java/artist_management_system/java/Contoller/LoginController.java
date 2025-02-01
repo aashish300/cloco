@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 @RestController
 public class LoginController {
@@ -31,17 +31,17 @@ public class LoginController {
     }
 
     @PostMapping(ApiConstant.LOGIN)
-    public ResponseEntity<String> login(@RequestBody UserEntity user) {
+    public ResponseEntity<Map<String, String>> login(@RequestBody UserEntity user) {
         UserEntity userEntity = this.userService.findByEmail(user.getEmail());
 
         if (userEntity == null) {
-            return new ResponseEntity<>("user not found", HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE);
+            return new ResponseEntity<Map<String, String>>(Map.of("message","user not found"), HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE);
         }
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         boolean matchPassword = passwordEncoder.matches(user.getPassword(), userEntity.getPassword());
 
         if(!matchPassword) {
-            return new ResponseEntity<>("Wrong password", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(Map.of("message", "Wrong password"), HttpStatus.UNAUTHORIZED);
         }
 
         JwtUser jwtUser = new JwtUser();
@@ -59,11 +59,13 @@ public class LoginController {
         user.setFirstName(userEntity.getFirstName());
         user.setLastName(userEntity.getLastName());
 
-        return new ResponseEntity<>("Welcome " + userEntity.getFirstName(), HttpStatus.OK);
+//        return new ResponseEntity<>(Map.of("message", "Welcome " + userEntity.getFirstName()), HttpStatus.OK);
+        return new ResponseEntity<Map<String, String>>(Map.of("message", "Welcome " + userEntity.getFirstName()), HttpStatus.OK);
     }
 
+
     @PostMapping(ApiConstant.REGISTER)
-        public ResponseEntity<String> register(@RequestBody UserEntity user) {
+    public ResponseEntity<String> register(@RequestBody UserEntity user) {
         UserEntity userEntity = this.userService.findByEmail(user.getEmail());
         if(userEntity != null) {
             return new ResponseEntity<>("User already exist", HttpStatus.CONFLICT);

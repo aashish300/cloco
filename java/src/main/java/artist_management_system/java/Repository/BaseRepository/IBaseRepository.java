@@ -15,4 +15,7 @@ public interface IBaseRepository<T> {
     List<T> query(String sql, Object[] args, RowMapper<T> rowMapper);
 
     int update(String sql, Object[] args);
+
+    T queryForObject(String sql, Object[] args, RowMapper<T> rowMapper);
+
 }

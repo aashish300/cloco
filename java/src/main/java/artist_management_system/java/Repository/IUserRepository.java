@@ -9,7 +9,15 @@ public interface IUserRepository {
 
     List<UserEntity> findByEmail(String email);
 
-    int save(UserEntity user);
+    boolean save(UserEntity user);
 
-//    Optional<UserEntity> findByEmail(String email);
+    UserEntity findById(Integer id);
+
+    boolean update(UserEntity user);
+
+    boolean deleteById(Integer id);
+
+    List<UserEntity> findAllByPagination(int limit, int offset);
+
+    List<UserEntity> findAll();
 }

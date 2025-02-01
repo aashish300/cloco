@@ -14,7 +14,7 @@ public class BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @NotNull
     @Column(name = "created_at")
@@ -23,7 +23,7 @@ public class BaseEntity implements Serializable {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

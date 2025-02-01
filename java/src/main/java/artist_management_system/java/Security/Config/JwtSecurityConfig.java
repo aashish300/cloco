@@ -1,5 +1,6 @@
 package artist_management_system.java.Security.Config;
 
+import artist_management_system.java.Configuration.CustomCorsConfiguration;
 import artist_management_system.java.Security.Auth.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,13 +24,16 @@ import java.util.Collections;
 @Component
 public class JwtSecurityConfig {
 
+    CustomCorsConfiguration customCorsConfiguration;
+
     private JwtAuthenticationProvider jwtAuthenticationProvider;
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Autowired
-    public JwtSecurityConfig(JwtAuthenticationProvider jwtAuthenticationProvider, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint) {
+    public JwtSecurityConfig(JwtAuthenticationProvider jwtAuthenticationProvider, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint, CustomCorsConfiguration customCorsConfiguration) {
         this.jwtAuthenticationProvider = jwtAuthenticationProvider;
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
+        this.customCorsConfiguration = customCorsConfiguration;
     }
 
     @Bean
@@ -46,7 +50,7 @@ public class JwtSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain configure(HttpSecurity httpSecurity, CustomAccessDeniedHandler accessDeniedHandler, JwtAuthenticationTokenFilter authenticationTokenFilter, CorsConfigurationSource corsConfigurationSource) throws Exception {
+    public SecurityFilterChain configure(HttpSecurity httpSecurity, CustomAccessDeniedHandler accessDeniedHandler, JwtAuthenticationTokenFilter authenticationTokenFilter, CustomCorsConfiguration customCorsConfiguration) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) ->
                         authorize.requestMatchers("/login", "/register").permitAll().anyRequest().authenticated())
@@ -54,7 +58,7 @@ public class JwtSecurityConfig {
                         .authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .cors(cors -> cors.configurationSource(corsConfigurationSource));
+                .cors(cors -> cors.configurationSource(customCorsConfiguration));
 
 //        httpSecurity.cors(AbstractHttpConfigurer::disable);
 

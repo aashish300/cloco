@@ -35,10 +35,40 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public UserEntity save(UserEntity user) {
-        int result = userRepository.save(user);
-        if (result == 1) {
+        boolean result = userRepository.save(user);
+        if (result) {
             return user;
         }
         return null;
+    }
+
+    @Override
+    public UserEntity findById(Integer id) {
+        return this.userRepository.findById(id);
+    }
+
+    @Override
+    public UserEntity update(UserEntity user) {
+        boolean result = userRepository.update(user);
+        if (result) {
+            return user;
+        }
+        return null;
+    }
+
+    @Override
+    public boolean deleteById(Integer id) {
+        return this.userRepository.deleteById(id);
+    }
+
+    @Override
+    public List<UserEntity> findAllByPagination(Integer page, Integer size) {
+        int offset = (page - 1) * size;
+        return this.userRepository.findAllByPagination(size, offset);
+    }
+
+    @Override
+    public List<UserEntity> findAll() {
+        return this.userRepository.findAll();
     }
 }
