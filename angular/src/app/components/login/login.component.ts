@@ -5,6 +5,7 @@ import {ApiConst} from "../../constants/ApiConst";
 import {HttpClient} from "@angular/common/http";
 import {MessageService} from "primeng/api";
 import { ToastModule } from 'primeng/toast';
+import {SecurityService} from "../../Security/security.service";
 
 @Component({
   selector: 'app-login',
@@ -41,6 +42,7 @@ export class LoginComponent implements OnInit {
         next: (res: any) => {
           if(!res) return;
           this.messageService.add({severity: 'success', summary: 'Success', detail: res?.message});
+          SecurityService.saveToLocalStorage(ApiConst.TOKEN, res?.user?.token)
         },
         error: (err) => {
           console.error(err);
