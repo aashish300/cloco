@@ -31,17 +31,17 @@ public class LoginController {
     }
 
     @PostMapping(ApiConstant.LOGIN)
-    public ResponseEntity<Map<String, String>> login(@RequestBody UserEntity user) {
-        UserEntity userEntity = this.userService.findByEmail(user.getEmail());
+    public ResponseEntity<Map<String, Object>> login(@RequestBody UserEntity user) {
+        UserEntity userEntity = this.userService.findByEmail(user.getEmail(), true);
 
         if (userEntity == null) {
-            return new ResponseEntity<Map<String, String>>(Map.of("message","user not found"), HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE);
+            return new ResponseEntity<>(Map.of("message","user not found or user is inactive"), HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE);
         }
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         boolean matchPassword = passwordEncoder.matches(user.getPassword(), userEntity.getPassword());
 
         if(!matchPassword) {
-            return new ResponseEntity<>(Map.of("message", "Wrong password"), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(Map.of("message", "Wrong password","user", user), HttpStatus.UNAUTHORIZED);
         }
 
         JwtUser jwtUser = new JwtUser();
@@ -51,32 +51,27 @@ public class LoginController {
         if(userEntity.getRole() != null) {
             List<String> roles = StringUtils.getCommaSeparatedArray(userEntity.getRole().toString(), ",");
             jwtUser.setRoles(roles);
-            user.setRole(userEntity.getRole());
         }
-
-        user.setId(userEntity.getId());
-        user.setToken(jwtGenerator.generate(jwtUser));
-        user.setFirstName(userEntity.getFirstName());
-        user.setLastName(userEntity.getLastName());
+        userEntity.setToken(jwtGenerator.generate(jwtUser));
 
 //        return new ResponseEntity<>(Map.of("message", "Welcome " + userEntity.getFirstName()), HttpStatus.OK);
-        return new ResponseEntity<Map<String, String>>(Map.of("message", "Welcome " + userEntity.getFirstName()), HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("message", "Welcome " + userEntity.getFirstName(), "user", userEntity), HttpStatus.OK);
     }
 
 
     @PostMapping(ApiConstant.REGISTER)
-    public ResponseEntity<String> register(@RequestBody UserEntity user) {
-        UserEntity userEntity = this.userService.findByEmail(user.getEmail());
+    public ResponseEntity<Map<String, Object>> register(@RequestBody UserEntity user) {
+        UserEntity userEntity = this.userService.findByEmail(user.getEmail(), false);
         if(userEntity != null) {
-            return new ResponseEntity<>("User already exist", HttpStatus.CONFLICT);
+            return new ResponseEntity<>(Map.of("message","User already exist"), HttpStatus.CONFLICT);
         }
 
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         UserEntity userEntity1 = this.userService.save(user);
         if (userEntity1 == null) {
-            return new ResponseEntity<>("User not registered", HttpStatus.CONFLICT);
+            return new ResponseEntity<>(Map.of("message","User not registered"), HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
+        return new ResponseEntity<>(Map.of("message","User registered successfully"), HttpStatus.CREATED);
     }
 }

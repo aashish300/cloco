@@ -34,9 +34,8 @@ public class UserEntity extends BaseEntity {
     @Column(name = "gender", columnDefinition = "gender_enum")
     private Gender gender;
 
-//    @Convert(converter = RoleConverter.class)
     @Enumerated(EnumType.STRING)
-    @Column(name = "user_role", columnDefinition = "user_role_enum", nullable = false)
+    @Column(name = "user_role", columnDefinition = "user_role_enum")
     private Role role;
 
     @Column(name = "address")

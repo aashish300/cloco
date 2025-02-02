@@ -5,7 +5,7 @@
     <p>Enter your credentials to access your account</p>
   </div>
 
-  <form id="loginForm" [formGroup]="registerForm" (click)="addUser()">
+  <form id="loginForm" [formGroup]="registerForm">
     <div class="form_group_container">
       <div class="form-group">
         <label for="firstName">First Name</label>
@@ -82,20 +82,8 @@
         placeholder="Enter your address">
     </div>
 
-    <div class="form-group">
-      <label for="role">Role</label>
-      <p-dropdown
-        id="role"
-        [options]="RoleConstant"
-        optionLabel="label"
-        optionValue="label"
-        formControlName="role">
-      </p-dropdown>
-    </div>
-
-
-    <button type="submit" class="login-btn" id="loginButton"
-            [class.disabled]="registerForm.invalid">
+    <button class="login-btn" id="loginButton"
+            [class.disabled]="registerForm.invalid" (click)="addUser()">
       Sign up
     </button>
   </form>

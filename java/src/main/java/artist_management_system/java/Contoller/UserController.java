@@ -25,7 +25,7 @@ public class UserController {
 
     @PostMapping(ApiConstant.SAVE)
     public ResponseEntity<String> save(@RequestBody UserEntity user) {
-        UserEntity userEntity = this.userService.findByEmail(user.getEmail());
+        UserEntity userEntity = this.userService.findByEmail(user.getEmail(), false);
         if (userEntity != null) {
             return new ResponseEntity<>("User already exist", HttpStatus.CONFLICT);
         }

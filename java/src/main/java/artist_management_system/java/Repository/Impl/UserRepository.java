@@ -6,7 +6,9 @@ import artist_management_system.java.Repository.BaseRepository.Impl.BaseReposito
 import artist_management_system.java.Repository.IUserRepository;
 import artist_management_system.java.Utils.Enum.Gender;
 import artist_management_system.java.Utils.Enum.Role;
+import jakarta.persistence.Table;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -17,6 +19,7 @@ import java.util.List;
 public class UserRepository extends BaseRepositoryImpl<UserEntity>  implements IUserRepository {
 
     private UserMapper userMapper;
+    private final String tableName = UserEntity.class.getAnnotation(Table.class).name();
 
     public UserRepository(JdbcTemplate jdbcTemplate, UserMapper userMapper) {
         super(jdbcTemplate);
@@ -24,9 +27,8 @@ public class UserRepository extends BaseRepositoryImpl<UserEntity>  implements I
     }
 
     public boolean save(UserEntity user) {
-        String tableName = UserEntity.class.getSimpleName();
         String rawQuery = "INSERT INTO " + tableName + " (first_name, last_name, email, password, phone, dob, gender, user_role, address," +
-                "token, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "token, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?::gender_enum, ?::user_role_enum, ?, ?, ?, ?)";
         int result = update(rawQuery, new Object[]{
                 user.getFirstName(),
                 user.getLastName(),
@@ -35,7 +37,7 @@ public class UserRepository extends BaseRepositoryImpl<UserEntity>  implements I
                 user.getPhone(),
                 user.getDob(),
                 user.getGender().name(),
-                user.getRole().name(),
+                user.getRole() != null ? user.getRole().name() : null,
                 user.getAddress(),
                 user.getToken(),
                 user.getCreatedAt(),
@@ -46,7 +48,6 @@ public class UserRepository extends BaseRepositoryImpl<UserEntity>  implements I
 
     @Override
     public List<UserEntity> findByEmail(String email) {
-        String tableName = UserEntity.class.getSimpleName();
         String rawQuery = "SELECT * FROM " + tableName + " WHERE email LIKE ?";
 
         return query(rawQuery, new Object[]{email}, userMapper.getEmailVerificationUserEntityRowMapper());
@@ -54,7 +55,6 @@ public class UserRepository extends BaseRepositoryImpl<UserEntity>  implements I
 
     @Override
     public UserEntity findById(Integer id) {
-        String tableName = UserEntity.class.getSimpleName();
         String rawQuery = "SELECT * FROM " + tableName + " WHERE id = ?";
 
         return queryForObject(rawQuery, new Object[]{id}, userMapper.getDisplayUserEntityRowMapper());
@@ -62,9 +62,8 @@ public class UserRepository extends BaseRepositoryImpl<UserEntity>  implements I
 
     @Override
     public boolean update(UserEntity user) {
-        String tableName = UserEntity.class.getSimpleName();
         String rawQuery = "UPDATE " + tableName + " SET first_name = ?, last_name = ?, email = ?, phone = ?, dob = ?, "
-                + "gender = ?, user_role = ?, address = ? WHERE id = ?";
+                + "gender = ?::gender_enum, user_role = ?::user_role_enum, address = ? WHERE id = ?";
         int result = update(rawQuery, new Object[]{
                 user.getFirstName(),
                 user.getLastName(),
@@ -80,7 +79,6 @@ public class UserRepository extends BaseRepositoryImpl<UserEntity>  implements I
 
     @Override
     public boolean deleteById(Integer id) {
-        String tableName = UserEntity.class.getSimpleName();
         String rawQuery = "DELETE " + tableName + " WHERE id = ?";
         int result = update(rawQuery, new Object[]{id});
 
@@ -89,7 +87,6 @@ public class UserRepository extends BaseRepositoryImpl<UserEntity>  implements I
 
     @Override
     public List<UserEntity> findAllByPagination(int limit, int offset) {
-        String tableName = UserEntity.class.getSimpleName();
         String rawQuery = "SELECT * FROM " + tableName + " ORDER BY first_name LIMIT = ? OFFSET = ?";
 
         return query(rawQuery, new Object[]{limit, offset}, userMapper.getDisplayUserEntityRowMapper());
@@ -97,7 +94,6 @@ public class UserRepository extends BaseRepositoryImpl<UserEntity>  implements I
 
     @Override
     public List<UserEntity> findAll() {
-        String tableName = UserEntity.class.getSimpleName();
         String rawQuery = "SELECT * FROM " + tableName + " ORDER BY first_name";
 
         return query(rawQuery, new Object[]{}, userMapper.getDisplayUserEntityRowMapper());

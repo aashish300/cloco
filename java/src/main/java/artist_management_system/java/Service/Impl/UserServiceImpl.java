@@ -24,9 +24,9 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public UserEntity findByEmail(String email) {
+    public UserEntity findByEmail(String email, boolean isLoggedIn) {
         List<UserEntity> users = userRepository.findByEmail(email);
-        if (!users.isEmpty()) {
+        if (!users.isEmpty() && isLoggedIn && users.getFirst().getRole() != null) {
             return users.getFirst();
         } else {
             return null;

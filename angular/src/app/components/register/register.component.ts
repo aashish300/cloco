@@ -32,9 +32,9 @@ export class RegisterComponent implements OnInit{
   private router = inject(Router);
   public registerForm: FormGroup;
   public genders = [
-    {label: 'Male', value: 'M'},
-    {label: 'Female', value: 'F'},
-    {label: 'Other', value: 'O'}
+    {label: 'Male', value: 'm'},
+    {label: 'Female', value: 'f'},
+    {label: 'Other', value: 'o'}
   ];
   protected readonly RoleConstant = RoleConstant;
 
@@ -49,7 +49,7 @@ export class RegisterComponent implements OnInit{
       gender: ['',[Validators.required]],
       phone: ['',[Validators.required]],
       address: ['',[Validators.required]],
-      role: ['', Validators.required]
+      // role: ['', Validators.required]
     })
   }
 

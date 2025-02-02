@@ -12,6 +12,7 @@ import { ToastModule } from 'primeng/toast';
   imports: [
     RouterLink,
     ReactiveFormsModule,
+    ToastModule,
   ],
   providers:[
     MessageService
@@ -28,7 +29,6 @@ export class LoginComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log('test');
     this.loginForm = this.fb.group({
       email: ['', [Validators.required]],
       password: ['', [Validators.required]]

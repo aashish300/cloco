@@ -19,7 +19,7 @@ public class UserMapper {
             user.setDob(rs.getDate("dob"));
             user.setAddress(rs.getString("address"));
             user.setGender(Gender.valueOf(rs.getString("gender")));
-            user.setRole(Role.valueOf(rs.getString("user_role")));
+            user.setRole(rs.getString("user_role") != null ? Role.valueOf(rs.getString("user_role")) : null);
             user.setPhone(rs.getString("phone"));
             return user;
         };
@@ -33,7 +33,11 @@ public class UserMapper {
             user.setFirstName(rs.getString("first_name"));
             user.setLastName(rs.getString("last_name"));
             user.setPassword(rs.getString("password"));
-            user.setRole(Role.valueOf(rs.getString("user_role")));
+            user.setDob(rs.getDate("dob"));
+            user.setAddress(rs.getString("address"));
+            user.setGender(Gender.valueOf(rs.getString("gender")));
+            user.setRole(rs.getString("user_role") != null ? Role.valueOf(rs.getString("user_role")) : null);
+            user.setPhone(rs.getString("phone"));
             return user;
         };
     }

@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface IUserService {
 
-    UserEntity findByEmail(String email);
+    UserEntity findByEmail(String email, boolean isLoggedIn);
 
     UserEntity save(UserEntity user);
 
