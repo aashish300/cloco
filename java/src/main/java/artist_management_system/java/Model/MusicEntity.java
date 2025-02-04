@@ -22,6 +22,22 @@ public class MusicEntity extends BaseEntity {
     @Column(name = "genre", columnDefinition = "genre_enum")
     private Genre genre;
 
+    public ArtistEntity getArtist() {
+        return artist;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAlbumName() {
+        return albumName;
+    }
+
+    public Genre getGenre() {
+        return genre;
+    }
+
     public void setArtist(ArtistEntity artist) {
         this.artist = artist;
     }

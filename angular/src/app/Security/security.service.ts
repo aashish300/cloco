@@ -9,7 +9,9 @@ export class SecurityService {
   }
 
   public static getFromLocalStorage(key: string): any {
-    return JSON.parse(localStorage.getItem(key)!);
+    const token = localStorage.getItem(key);
+    console.log(token)
+    return token ? JSON.stringify(token) : null;
   }
 
   /**

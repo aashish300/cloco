@@ -4,31 +4,26 @@ import artist_management_system.java.Mapper.UserMapper;
 import artist_management_system.java.Model.UserEntity;
 import artist_management_system.java.Repository.BaseRepository.Impl.BaseRepositoryImpl;
 import artist_management_system.java.Repository.IUserRepository;
-import artist_management_system.java.Utils.Enum.Gender;
-import artist_management_system.java.Utils.Enum.Role;
 import jakarta.persistence.Table;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public class UserRepository extends BaseRepositoryImpl<UserEntity>  implements IUserRepository {
+public class UserRepositoryImpl extends BaseRepositoryImpl<UserEntity>  implements IUserRepository {
 
     private UserMapper userMapper;
     private final String tableName = UserEntity.class.getAnnotation(Table.class).name();
 
-    public UserRepository(JdbcTemplate jdbcTemplate, UserMapper userMapper) {
+    public UserRepositoryImpl(JdbcTemplate jdbcTemplate, UserMapper userMapper) {
         super(jdbcTemplate);
         this.userMapper = userMapper;
     }
 
     public boolean save(UserEntity user) {
         String rawQuery = "INSERT INTO " + tableName + " (first_name, last_name, email, password, phone, dob, gender, user_role, address," +
-                "token, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?::gender_enum, ?::user_role_enum, ?, ?, ?, ?)";
+                "token, created_at) VALUES (?, ?, ?, ?, ?, ?, ?::gender_enum, ?::user_role_enum, ?, ?, ?)";
         int result = update(rawQuery, new Object[]{
                 user.getFirstName(),
                 user.getLastName(),
@@ -36,12 +31,11 @@ public class UserRepository extends BaseRepositoryImpl<UserEntity>  implements I
                 user.getPassword(),
                 user.getPhone(),
                 user.getDob(),
-                user.getGender().name(),
+                user.getGender() != null ? user.getGender().name() : null,
                 user.getRole() != null ? user.getRole().name() : null,
                 user.getAddress(),
                 user.getToken(),
                 user.getCreatedAt(),
-                user.getUpdatedAt(),
         });
         return result != 0;
     }
@@ -63,16 +57,17 @@ public class UserRepository extends BaseRepositoryImpl<UserEntity>  implements I
     @Override
     public boolean update(UserEntity user) {
         String rawQuery = "UPDATE " + tableName + " SET first_name = ?, last_name = ?, email = ?, phone = ?, dob = ?, "
-                + "gender = ?::gender_enum, user_role = ?::user_role_enum, address = ? WHERE id = ?";
+                + "gender = ?::gender_enum, user_role = ?::user_role_enum, address = ?, updated_at = ? WHERE id = ?";
         int result = update(rawQuery, new Object[]{
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
                 user.getPhone(),
                 user.getDob(),
-                user.getGender().name(),
-                user.getRole().name(),
+                user.getGender() != null ? user.getGender().name() : null,
+                user.getRole() != null ? user.getRole().name() : null,
                 user.getAddress(),
+                user.getUpdatedAt()
         });
         return result != 0;
     }

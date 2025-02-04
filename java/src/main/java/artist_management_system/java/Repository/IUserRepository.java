@@ -1,11 +1,11 @@
 package artist_management_system.java.Repository;
 
 import artist_management_system.java.Model.UserEntity;
+import artist_management_system.java.Repository.BaseRepository.IBaseRepository;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface IUserRepository {
+public interface IUserRepository extends IBaseRepository<UserEntity> {
 
     List<UserEntity> findByEmail(String email);
 

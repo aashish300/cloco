@@ -62,7 +62,6 @@ export class RegisterComponent implements OnInit{
     this.http.post(`${ApiConst.SERVER_URL}/${ApiConst.REGISTER}`, formValue)
       .subscribe({
         next: (res: any) => {
-          console.log(res)
           if(!res) return;
           this.messageService.add({severity: 'success', summary: 'Success', detail: res?.message });
           this.registerForm.reset();

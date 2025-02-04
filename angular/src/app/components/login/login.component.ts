@@ -1,5 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {ApiConst} from "../../constants/ApiConst";
 import {HttpClient} from "@angular/common/http";
@@ -26,10 +26,12 @@ export class LoginComponent implements OnInit {
   public loginForm!: FormGroup;
   private fb = inject(FormBuilder);
   private http = inject(HttpClient);
+  private router = inject(Router);
   private messageService = inject(MessageService);
 
 
   ngOnInit() {
+    SecurityService.clearLocalStorage();
     this.loginForm = this.fb.group({
       email: ['', [Validators.required]],
       password: ['', [Validators.required]]
@@ -42,7 +44,8 @@ export class LoginComponent implements OnInit {
         next: (res: any) => {
           if(!res) return;
           this.messageService.add({severity: 'success', summary: 'Success', detail: res?.message});
-          SecurityService.saveToLocalStorage(ApiConst.TOKEN, res?.user?.token)
+          SecurityService.saveToLocalStorage(ApiConst.TOKEN, res?.user?.token);
+          this.router.navigate(['/dashboard']);
         },
         error: (err) => {
           console.error(err);

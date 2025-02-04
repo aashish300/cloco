@@ -1,0 +1,14 @@
+<div class="navbar_container">
+  <div class="icon_container" (click)="router.navigate(['user'])">
+    <img src="assets/person.svg" alt="artist icon" />
+    <div>User</div>
+  </div>
+  <div class="icon_container" (click)="router.navigate(['artist'])">
+    <img class="icon" src="assets/artist.svg" alt="artist icon" />
+    <div>Artist</div>
+  </div>
+  <div class="icon_container" (click)="logout()">
+    <img src="assets/logout.svg" alt="artist icon" />
+    <div>Logout</div>
+  </div>
+</div>

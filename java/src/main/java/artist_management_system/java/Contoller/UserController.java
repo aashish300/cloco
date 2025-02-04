@@ -41,8 +41,13 @@ public class UserController {
 
     @PutMapping(ApiConstant.UPDATE)
     public ResponseEntity<String> update(@RequestBody UserEntity user) {
-        UserEntity userEntity = this.userService.update(user);
-        if (userEntity == null) {
+        UserEntity userEntity = this.userService.findByEmail(user.getEmail(), false);
+        if (userEntity != null) {
+            return new ResponseEntity<>("User already exist", HttpStatus.CONFLICT);
+        }
+
+        UserEntity userEntity1 = this.userService.update(user);
+        if (userEntity1 == null) {
             return new ResponseEntity<>("User not Found", HttpStatus.CONFLICT);
         }
 
