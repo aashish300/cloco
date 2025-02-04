@@ -1,15 +1,21 @@
 import {Injectable} from "@angular/core";
 import {ApiConst} from "../constants/ApiConst";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class SecurityService {
 
-  public static saveToLocalStorage(key: string, token: string): void {
-    localStorage.setItem(key, token);
+  public saveToLocalStorage(key: string, token: string): void {
+    if(typeof window === 'undefined') { return;}
+    window.localStorage.setItem(key, token);
   }
 
-  public static getFromLocalStorage(key: string): any {
-    const token = localStorage.getItem(key);
+  public getFromLocalStorage(key: string): any {
+    console.log(typeof window)
+    if(typeof window === 'undefined') { return;}
+    const token = window.localStorage.getItem(key);
+    console.log(window.localStorage.getItem('token'))
     console.log(token)
     return token ? JSON.stringify(token) : null;
   }
@@ -17,7 +23,8 @@ export class SecurityService {
   /**
    * Removes all attendance items from localstorage
    */
-  public static clearLocalStorage() {
-    localStorage.removeItem(ApiConst.TOKEN);
+  public clearLocalStorage() {
+    if(typeof window === 'undefined') { return;}
+    window.localStorage.removeItem(ApiConst.TOKEN);
   }
 }

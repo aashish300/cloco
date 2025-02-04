@@ -10,16 +10,18 @@ import {SecurityService} from "../../../Security/security.service";
   imports: [
     MenubarModule
   ],
+  providers:[SecurityService],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent{
 
   public router = inject(Router);
+  private securityService = inject(SecurityService);
 
   logout() {
     this.router.navigate(['/']);
-    SecurityService.clearLocalStorage();
+    this.securityService.clearLocalStorage();
   }
 
 }

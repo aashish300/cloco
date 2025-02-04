@@ -26,12 +26,13 @@ export class LoginComponent implements OnInit {
   public loginForm!: FormGroup;
   private fb = inject(FormBuilder);
   private http = inject(HttpClient);
+  private securityService = inject(SecurityService);
   private router = inject(Router);
   private messageService = inject(MessageService);
 
 
   ngOnInit() {
-    SecurityService.clearLocalStorage();
+    this.securityService.clearLocalStorage();
     this.loginForm = this.fb.group({
       email: ['', [Validators.required]],
       password: ['', [Validators.required]]
@@ -44,7 +45,7 @@ export class LoginComponent implements OnInit {
         next: (res: any) => {
           if(!res) return;
           this.messageService.add({severity: 'success', summary: 'Success', detail: res?.message});
-          SecurityService.saveToLocalStorage(ApiConst.TOKEN, res?.user?.token);
+          this.securityService.saveToLocalStorage(ApiConst.TOKEN, res?.user?.token);
           this.router.navigate(['/dashboard']);
         },
         error: (err) => {
