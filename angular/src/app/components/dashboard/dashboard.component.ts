@@ -15,6 +15,6 @@ export class DashboardComponent implements OnInit {
 
   private router = inject(Router);
   ngOnInit() {
-    this.router.navigate(['/user'])
+    // this.router.navigate(['/user'])
   }
 }

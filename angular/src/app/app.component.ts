@@ -1,10 +1,10 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {ToastModule} from "primeng/toast";
 import {MessageService} from "primeng/api";
 import {NavbarComponent} from "./components/common/navbar/navbar.component";
 import {SecurityService} from "./Security/security.service";
-import { initFlowbite } from 'flowbite';
+import {AuthService} from "./services/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -14,13 +14,8 @@ import { initFlowbite } from 'flowbite';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
 
-  public isLoggedIn: boolean = false;
-  private securityService = inject(SecurityService);
-
-  ngOnInit() {
-    this.isLoggedIn = !!this.securityService.getFromLocalStorage('token');
-  }
+  public authService = inject(AuthService);
 
 }

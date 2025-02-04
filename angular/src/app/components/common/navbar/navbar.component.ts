@@ -3,6 +3,7 @@ import {MenubarModule} from "primeng/menubar";
 import {MenuItem} from "primeng/api";
 import {Router} from "@angular/router";
 import {SecurityService} from "../../../Security/security.service";
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-navbar',
@@ -17,11 +18,10 @@ import {SecurityService} from "../../../Security/security.service";
 export class NavbarComponent{
 
   public router = inject(Router);
-  private securityService = inject(SecurityService);
+  private authService = inject(AuthService);
 
   logout() {
-    this.router.navigate(['/']);
-    this.securityService.clearLocalStorage();
+    this.authService.logout();
+    window.location.reload();
   }
-
 }
