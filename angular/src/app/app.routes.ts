@@ -18,10 +18,12 @@ export const routes: Routes = [
     data: {
     roles: ['super_admin'],
     } },
-  { path: 'artist', component: ArtistComponent, data: {
+  { path: 'artist', component: ArtistComponent, canActivate: [authGuard],
+    data: {
       roles: ['super_admin', 'artist_manager']
     }},
-  { path: 'artist/:id', component: MusicComponent, data: {
+  { path: 'artist/:id', component: MusicComponent, canActivate: [authGuard],
+    data: {
       roles: ['super_admin', 'artist_manager', 'artist']
     }},
   { path: '**', component: RedirectComponent },

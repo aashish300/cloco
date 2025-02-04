@@ -1,1 +1,97 @@
-<p>artist works!</p>
+<button class="btn" (click)="openDialog()">Add</button>
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+    <tr>
+      <th scope="col" class="px-6 py-3">
+        S.N
+      </th>
+      <th scope="col" class="px-6 py-3">
+        Name
+      </th>
+      <th scope="col" class="px-6 py-3">
+        DOB
+      </th>
+      <th scope="col" class="px-6 py-3">
+        Gender
+      </th>
+      <th scope="col" class="px-6 py-3">
+        Address
+      </th>
+      <th scope="col" class="px-6 py-3">
+        First Release Year
+      </th>
+      <th scope="col" class="px-6 py-3">
+        No of Albums Released
+      </th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+      @for ( artist of artistList(); track artist; let first = $first, index = $index) {
+        <td class="px-6 py-4">
+          {{ index + 1 }}
+        </td>
+        <td class="px-6 py-4">
+          {{ artist.name }}
+        </td>
+        <td class="px-6 py-4">
+          {{ artist.dob }}
+        </td>
+        <td class="px-6 py-4">
+          {{ artist.gender }}
+        </td>
+        <td class="px-6 py-4">
+          {{ artist.address }}
+        </td>
+        <td class="px-6 py-4">
+          {{ artist.first_release_year }}
+        </td>
+        <td class="px-6 py-4">
+          {{ artist.no_of_albums_released }}
+        </td>
+        <td class="px-6 py-4">
+          <button class="btn" (click)="editArtist(artist)">Edit</button>/<button class="btn" (click)="deleteArtist(artist)">Delete</button>
+        </td>
+      }
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<p-dialog header="User Details" [(visible)]="visible" [modal]="true" [closable]="false">
+  <div class="p-fluid" [formGroup]="artistForm">
+    <div class="p-field">
+      <label for="firstName">First Name</label>
+      <input id="firstName" type="text" pInputText formControlName="name" />
+    </div>
+    <div class="p-field">
+      <label for="dob">Date of Birth</label>
+      <p-calendar formControlName="dob" id="dob" dateFormat="yy-mm-dd"></p-calendar>
+    </div>
+    <div class="p-field">
+      <label>Gender</label>
+      <p-dropdown id="gender" [options]="Gender" placeholder="Select a Gender" formControlName="gender"></p-dropdown>
+    </div>
+    <div class="p-field">
+      <label for="address">Address</label>
+      <input id="address" formControlName="address" pInputText />
+    </div>
+
+    <div class="p-field">
+      <label for="release">Last Name</label>
+      <input id="release" type="number" pInputText formControlName="first_release_year" />
+    </div>
+    <div class="p-field">
+      <label for="albums">Last Name</label>
+      <input id="albums" type="number" pInputText formControlName="no_of_albums_released" />
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <p-button label="Cancel" icon="pi pi-times" (click)="visible = false" class="p-button-text"></p-button>
+    <p-button label="Save" icon="pi pi-check" (click)="addArtist()"></p-button>
+  </ng-template>
+</p-dialog>

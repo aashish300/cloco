@@ -1,6 +1,5 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {MenubarModule} from "primeng/menubar";
-import {MenuItem} from "primeng/api";
 import {Router} from "@angular/router";
 import {SecurityService} from "../../../Security/security.service";
 import {AuthService} from "../../../services/auth.service";

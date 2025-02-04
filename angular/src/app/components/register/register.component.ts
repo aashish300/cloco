@@ -7,6 +7,7 @@ import {HttpClient} from "@angular/common/http";
 import {ApiConst} from "../../constants/ApiConst";
 import {RoleConstant} from "../../constants/role.constant";
 import {MessageService} from "primeng/api";
+import {Gender} from "../../utils/globa.utils";
 
 @Component({
   selector: 'app-register',
@@ -31,11 +32,7 @@ export class RegisterComponent implements OnInit{
   private messageService = inject(MessageService);
   private router = inject(Router);
   public registerForm: FormGroup;
-  public genders = [
-    {label: 'Male', value: 'm'},
-    {label: 'Female', value: 'f'},
-    {label: 'Other', value: 'o'}
-  ];
+  public genders = Gender;
   protected readonly RoleConstant = RoleConstant;
 
   constructor(
