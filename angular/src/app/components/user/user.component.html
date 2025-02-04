@@ -1,11 +1,12 @@
-<p-table [value]="userList()" [tableStyle]="{ 'min-width': '50rem' }">
+<p-table
+  [value]="userList()" [paginator]="true"
+  [rows]="5"
+  [tableStyle]="{ 'min-width': '50rem' }"
+  [rowsPerPageOptions]="[5, 10, 20]">
   <ng-template pTemplate="caption">
     <div class="flex">
       <p-button label="Add" [outlined]="true" icon="pi pi-filter-slash" (onClick)="addUser()" />
-<!--      <span class="p-input-icon-left ml-auto">-->
-<!--                <i class="pi pi-search"></i>-->
-<!--                <input pInputText type="text" [(ngModel)]="searchValue" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />-->
-<!--            </span>-->
+      <p-button label="Edit" [outlined]="true" icon="pi pi-filter-slash" (onClick)="addUser()" />
     </div>
   </ng-template>
   <ng-template pTemplate="header">

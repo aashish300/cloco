@@ -16,10 +16,11 @@
 body {
   min-height: 100vh;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  //align-items: center;
+  //justify-content: center;
   background-color: #f5f5f5;
   padding: 20px;
+  margin-top: 50px;
 }
 
 p-calendar {
@@ -35,15 +36,6 @@ p-calendar {
       font-size: 1rem;
       transition: all 0.3s ease;
     }
-    //button {
-    //  position: absolute;
-    //  left: 0;
-    //  top: 10px;
-    //  background: transparent;
-    //  border: none;
-    //  cursor: pointer;
-    //  color: #774ea7;
-    //}
   }
 }
 
