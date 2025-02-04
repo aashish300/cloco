@@ -6,6 +6,7 @@ import artist_management_system.java.Service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ public class UserController {
     }
 
     @PostMapping(ApiConstant.SAVE)
+    @PreAuthorize("hasAuthority('super_admin')")
     public ResponseEntity<String> save(@RequestBody UserEntity user) {
         UserEntity userEntity = this.userService.findByEmail(user.getEmail(), false);
         if (userEntity != null) {
@@ -40,6 +42,7 @@ public class UserController {
     }
 
     @PutMapping(ApiConstant.UPDATE)
+    @PreAuthorize("hasAuthority('super_admin')")
     public ResponseEntity<String> update(@RequestBody UserEntity user) {
         UserEntity userEntity = this.userService.findByEmail(user.getEmail(), false);
         if (userEntity != null) {
@@ -55,6 +58,7 @@ public class UserController {
     }
 
     @GetMapping(ApiConstant.ID)
+    @PreAuthorize("hasAuthority('super_admin')")
     public ResponseEntity findById(@PathVariable("id") Integer id) {
         UserEntity userEntity = this.userService.findById(id);
         if (userEntity == null) {
@@ -65,6 +69,7 @@ public class UserController {
     }
 
     @DeleteMapping(ApiConstant.ID)
+    @PreAuthorize("hasAuthority('super_admin')")
     public ResponseEntity<String> deleteById(@PathVariable("id") Integer id) {
         boolean result = this.userService.deleteById(id);
         if (!result) {
@@ -74,6 +79,7 @@ public class UserController {
     }
 
     @GetMapping(ApiConstant.FINDALLBYPAGINATION)
+    @PreAuthorize("hasAuthority('super_admin')")
     public ResponseEntity findAllByPagination(@RequestParam("page") Integer page,
                                               @RequestParam("size") Integer size) {
         List<UserEntity> userEntityList = this.userService.findAllByPagination(page, size);
@@ -84,6 +90,7 @@ public class UserController {
     }
 
     @GetMapping(ApiConstant.FINDALL)
+    @PreAuthorize("hasAuthority('super_admin')")
     public ResponseEntity findAll() {
         List<UserEntity> userEntityList = this.userService.findAll();
         if (userEntityList.isEmpty()) {

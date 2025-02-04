@@ -18,4 +18,7 @@ public interface IMusicRepository extends IBaseRepository<MusicEntity> {
     List<MusicEntity> findAllByPagination(int limit, int offset);
 
     List<MusicEntity> findAll();
+
+    MusicEntity findByArtistId(Integer artistId);
+
 }

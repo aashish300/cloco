@@ -2,11 +2,11 @@ package artist_management_system.java.Contoller;
 
 import artist_management_system.java.ApiConstant.ApiConstant;
 import artist_management_system.java.Model.ArtistEntity;
-import artist_management_system.java.Model.MusicEntity;
 import artist_management_system.java.Service.IArtistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +23,7 @@ public class ArtistController {
     }
 
     @PostMapping(ApiConstant.SAVE)
+    @PreAuthorize("hasAnyAuthority('super_admin', 'artist_manager')")
     public ResponseEntity<String> save(@RequestBody ArtistEntity artist) {
         ArtistEntity artistEntity = this.artistService.save(artist);
         if (artistEntity == null) {
@@ -32,6 +33,7 @@ public class ArtistController {
     }
 
     @PutMapping(ApiConstant.UPDATE)
+    @PreAuthorize("hasAnyAuthority('super_admin', 'artist_manager')")
     public ResponseEntity<String> update(@RequestBody ArtistEntity artist) {
         ArtistEntity artistEntity = this.artistService.update(artist);
 
@@ -43,6 +45,7 @@ public class ArtistController {
     }
 
     @GetMapping(ApiConstant.ID)
+    @PreAuthorize("hasAnyAuthority('super_admin', 'artist_manager')")
     public ResponseEntity findById(@PathVariable("id") Integer id) {
         ArtistEntity ArtistEntity = this.artistService.findById(id);
         if (ArtistEntity == null) {
@@ -53,6 +56,7 @@ public class ArtistController {
     }
 
     @DeleteMapping(ApiConstant.ID)
+    @PreAuthorize("hasAnyAuthority('super_admin', 'artist_manager')")
     public ResponseEntity<String> deleteById(@PathVariable("id") Integer id) {
         boolean result = this.artistService.deleteById(id);
         if (!result) {
@@ -62,6 +66,7 @@ public class ArtistController {
     }
 
     @GetMapping(ApiConstant.FINDALLBYPAGINATION)
+    @PreAuthorize("hasAnyAuthority('super_admin', 'artist_manager')")
     public ResponseEntity findAllByPagination(@RequestParam("page") Integer page,
                                               @RequestParam("size") Integer size) {
         List<ArtistEntity> ArtistEntityList = this.artistService.findAllByPagination(page, size);
@@ -72,6 +77,7 @@ public class ArtistController {
     }
 
     @GetMapping(ApiConstant.FINDALL)
+    @PreAuthorize("hasAnyAuthority('super_admin', 'artist_manager')")
     public ResponseEntity findAll() {
         List<ArtistEntity> artistEntityList = this.artistService.findAll();
         if (artistEntityList.isEmpty()) {
