@@ -78,4 +78,5 @@ export class ArtistComponent implements OnInit {
   addArtist() {
   }
 
+  protected readonly genders = Gender;
 }

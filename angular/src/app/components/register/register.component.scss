@@ -1,3 +1,7 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+}
 
 .login-card {
   background: white;
@@ -136,16 +140,6 @@
   font-weight: 600;
 }
 
-.signup-link a:hover {
-  text-decoration: underline;
-}
-
-.error {
-  color: #dc3545;
-  font-size: 0.85rem;
-  margin-top: 0.5rem;
-  display: none;
-}
 
 @keyframes shake {
   0%, 100% { transform: translateX(0); }

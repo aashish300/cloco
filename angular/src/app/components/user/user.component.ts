@@ -40,7 +40,8 @@ export class UserComponent implements OnInit {
 
   userList: WritableSignal<any> = signal('');
   protected readonly RoleConstant = RoleConstant;
-  protected readonly Gender = Gender;
+  protected readonly genders = Gender;
+
   visible = false;
 
   constructor() {
@@ -67,18 +68,18 @@ export class UserComponent implements OnInit {
       .subscribe({
         next: (res) => {
           this.userList.set(res);
-          console.log(res)
         }
       })
   }
 
-  addUser() {
+  openDialog() {
     this.visible = true;
+    this.userForm.reset();
   }
 
   editUser(user: any) {
     this.visible = true;
-    this.userForm.patchValue(user)
+    this.userForm.patchValue({...user, dob: new Date(user.dob)})
   }
 
   saveUser() {
@@ -98,4 +99,5 @@ export class UserComponent implements OnInit {
         }
       })
   }
+
 }
