@@ -30,7 +30,7 @@ public class ArtistRepositoryImpl extends BaseRepositoryImpl<ArtistEntity> imple
                 artist.getDob(),
                 artist.getGender() != null ? artist.getGender().name() : null,
                 artist.getAddress(),
-                artist.getFirstReleaseYear(),
+                artist.getFirstReleaseYear() != null ? artist.getFirstReleaseYear().getValue() : null,
                 artist.getNoOfAlbumsReleased(),
                 artist.getCreatedAt(),
         });
@@ -63,7 +63,7 @@ public class ArtistRepositoryImpl extends BaseRepositoryImpl<ArtistEntity> imple
 
     @Override
     public boolean deleteById(Integer id) {
-        String rawQuery = "DELETE " + tableName + " WHERE id = ?";
+        String rawQuery = "DELETE FROM " + tableName + " WHERE id = ?";
         int result = update(rawQuery, new Object[]{id});
 
         return result != 0;

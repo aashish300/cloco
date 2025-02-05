@@ -58,32 +58,33 @@ public class ArtistController {
 
     @DeleteMapping(ApiConstant.ID)
     @PreAuthorize("hasAnyAuthority('super_admin', 'artist_manager')")
-    public ResponseEntity<String> deleteById(@PathVariable("id") Integer id) {
+    public ResponseEntity<Map<String, Object>> deleteById(@PathVariable("id") Integer id) {
         boolean result = this.artistService.deleteById(id);
         if (!result) {
-            return new ResponseEntity<>("artist not Found", HttpStatus.CONFLICT);
+            return new ResponseEntity<>(Map.of("message","artist not Found"), HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>("artist Deleted Successfully", HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("message","artist Deleted Successfully"), HttpStatus.OK);
     }
 
     @GetMapping(ApiConstant.FINDALLBYPAGINATION)
     @PreAuthorize("hasAnyAuthority('super_admin', 'artist_manager')")
-    public ResponseEntity findAllByPagination(@RequestParam("page") Integer page,
+    public ResponseEntity<Map<String, Object>> findAllByPagination(@RequestParam("page") Integer page,
                                               @RequestParam("size") Integer size) {
         List<ArtistEntity> ArtistEntityList = this.artistService.findAllByPagination(page, size);
         if (ArtistEntityList.isEmpty()) {
-            return new ResponseEntity<>("List not available", HttpStatus.CONFLICT);
+            return new ResponseEntity<>(Map.of("message","List not available"), HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>(ArtistEntityList, HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("message","Successfully Fetched!!!", "list", ArtistEntityList), HttpStatus.OK);
     }
 
     @GetMapping(ApiConstant.FINDALL)
     @PreAuthorize("hasAnyAuthority('super_admin', 'artist_manager')")
-    public ResponseEntity findAll() {
+    public ResponseEntity<Map<String, Object>> findAll() {
         List<ArtistEntity> artistEntityList = this.artistService.findAll();
         if (artistEntityList.isEmpty()) {
-            return new ResponseEntity<>("List not available", HttpStatus.CONFLICT);
+            return new ResponseEntity<>(Map.of("message","List not available"), HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>(artistEntityList, HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("message","Successfully Fetched!!!", "list", artistEntityList), HttpStatus.OK);
+
     }
 }

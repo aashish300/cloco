@@ -58,8 +58,8 @@ export class ArtistComponent implements OnInit {
     this.http.get(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.ARTIST}/${ApiConst.FIND_ALL}`)
       .subscribe({
         next: (res: any) => {
-          console.log('list')
-          this.artistList.set(res);
+          this.artistList.set(res?.list);
+          this.artistForm.reset();
           this.isUpdate = false;
           this.visible = false;
         }
@@ -80,7 +80,7 @@ export class ArtistComponent implements OnInit {
       .subscribe({
         next: (res) => {
           console.log(res)
-          if(res) return;
+          if(!res) return;
           this.fetchArtist();
         }
       })
