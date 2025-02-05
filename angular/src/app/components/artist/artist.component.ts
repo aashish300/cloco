@@ -9,7 +9,6 @@ import {HttpClient} from "@angular/common/http";
 import {ApiConst} from "../../constants/ApiConst";
 import {ArtistInterface} from "../../model/artist.interface";
 import {Gender} from "../../utils/globa.utils";
-import {LoginComponent} from "../login/login.component";
 
 @Component({
   selector: 'app-artist',
