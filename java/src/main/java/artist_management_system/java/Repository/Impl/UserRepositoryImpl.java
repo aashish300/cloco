@@ -8,6 +8,7 @@ import jakarta.persistence.Table;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -57,7 +58,8 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserEntity>  implemen
     @Override
     public boolean update(UserEntity user) {
         String rawQuery = "UPDATE " + tableName + " SET first_name = ?, last_name = ?, email = ?, phone = ?, dob = ?, "
-                + "gender = ?::gender_enum, user_role = ?::user_role_enum, address = ?, updated_at = ? WHERE id = ?";
+                + "gender = COALESCE(?::gender_enum, gender), user_role = COALESCE(?::user_role_enum, user_role), address = ? "
+                + "WHERE id = ?";
         int result = update(rawQuery, new Object[]{
                 user.getFirstName(),
                 user.getLastName(),
@@ -67,14 +69,14 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserEntity>  implemen
                 user.getGender() != null ? user.getGender().name() : null,
                 user.getRole() != null ? user.getRole().name() : null,
                 user.getAddress(),
-                user.getUpdatedAt()
+                user.getId()
         });
         return result != 0;
     }
 
     @Override
     public boolean deleteById(Integer id) {
-        String rawQuery = "DELETE " + tableName + " WHERE id = ?";
+        String rawQuery = "DELETE FROM " + tableName + " WHERE id = ?";
         int result = update(rawQuery, new Object[]{id});
 
         return result != 0;

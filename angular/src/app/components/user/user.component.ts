@@ -43,11 +43,14 @@ export class UserComponent implements OnInit {
   protected readonly genders = Gender;
 
   visible = false;
+  public isUpdate = false;
 
   constructor() {
     this.userForm = this.fb.group({
+      id: '',
       firstName: '',
       lastName: '',
+      password: '',
       email: '',
       gender: '',
       phone: '',
@@ -72,27 +75,39 @@ export class UserComponent implements OnInit {
       })
   }
 
-  openDialog() {
+  openDialog(selectedRow: any = null) {
     this.visible = true;
     this.userForm.reset();
+    this.userForm.patchValue({...selectedRow, dob: new Date(selectedRow.dob)});
+    selectedRow ? this.isUpdate = true : null;
   }
 
-  editUser(user: any) {
-    this.visible = true;
-    this.userForm.patchValue({...user, dob: new Date(user.dob)})
+  addUser() {
+    this.http.post(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.USER}/${ApiConst.SAVE}`, this.userForm.getRawValue())
+      .subscribe({
+        next: (res) => {
+        },
+        complete: () => {
+          this.isUpdate = false;
+          this.fetchUser();
+        }
+      })
   }
 
-  saveUser() {
+  updateUser() {
     this.http.put(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.USER}/${ApiConst.UPDATE}`, this.userForm.getRawValue())
       .subscribe({
         next: (res) => {
-          console.log(res)
+        },
+        complete: () => {
+          this.isUpdate = false;
+          this.fetchUser();
         }
       })
   }
 
   deleteUser(user: UserInterface) {
-    this.http.delete(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.USER}/${ApiConst.DELETE}/${user.id}`)
+    this.http.delete(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.USER}/${user.id}`)
       .subscribe({
         next: () => {
 
