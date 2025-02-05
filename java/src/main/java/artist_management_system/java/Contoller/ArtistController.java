@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(ApiConstant.ARTIST)
@@ -24,24 +25,24 @@ public class ArtistController {
 
     @PostMapping(ApiConstant.SAVE)
     @PreAuthorize("hasAnyAuthority('super_admin', 'artist_manager')")
-    public ResponseEntity<String> save(@RequestBody ArtistEntity artist) {
+    public ResponseEntity<Map<String ,Object>> save(@RequestBody ArtistEntity artist) {
         ArtistEntity artistEntity = this.artistService.save(artist);
         if (artistEntity == null) {
-            return new ResponseEntity<>("Artist not registered", HttpStatus.CONFLICT);
+            return new ResponseEntity<>(Map.of("message","Artist not registered"), HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>("Artist registered successfully!!!", HttpStatus.CREATED);
+        return new ResponseEntity<>(Map.of("message","Artist registered successfully!!!"), HttpStatus.CREATED);
     }
 
     @PutMapping(ApiConstant.UPDATE)
     @PreAuthorize("hasAnyAuthority('super_admin', 'artist_manager')")
-    public ResponseEntity<String> update(@RequestBody ArtistEntity artist) {
+    public ResponseEntity<Map<String, Object>> update(@RequestBody ArtistEntity artist) {
         ArtistEntity artistEntity = this.artistService.update(artist);
 
         if (artistEntity == null) {
-            return new ResponseEntity<>("Artist not Found", HttpStatus.CONFLICT);
+            return new ResponseEntity<>(Map.of("message","Artist not Found"), HttpStatus.CONFLICT);
         }
 
-        return new ResponseEntity<>("Artist Updated Successfully!!!", HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("message","Artist Updated Successfully!!!"), HttpStatus.OK);
     }
 
     @GetMapping(ApiConstant.ID)
@@ -49,7 +50,7 @@ public class ArtistController {
     public ResponseEntity findById(@PathVariable("id") Integer id) {
         ArtistEntity ArtistEntity = this.artistService.findById(id);
         if (ArtistEntity == null) {
-            return new ResponseEntity<>("artist not Found", HttpStatus.CONFLICT);
+            return new ResponseEntity<>("artist not SFound", HttpStatus.CONFLICT);
         }
 
         return new ResponseEntity<>(ArtistEntity, HttpStatus.OK);

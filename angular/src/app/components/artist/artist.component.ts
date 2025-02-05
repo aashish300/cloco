@@ -1,5 +1,4 @@
 import {Component, inject, OnInit, signal, WritableSignal} from '@angular/core';
-import {Button} from "primeng/button";
 import {CalendarModule} from "primeng/calendar";
 import {DialogModule} from "primeng/dialog";
 import {DropdownModule} from "primeng/dropdown";
@@ -10,12 +9,12 @@ import {HttpClient} from "@angular/common/http";
 import {ApiConst} from "../../constants/ApiConst";
 import {ArtistInterface} from "../../model/artist.interface";
 import {Gender} from "../../utils/globa.utils";
+import {LoginComponent} from "../login/login.component";
 
 @Component({
   selector: 'app-artist',
   standalone: true,
   imports: [
-    Button,
     CalendarModule,
     DialogModule,
     DropdownModule,
@@ -31,7 +30,8 @@ export class ArtistComponent implements OnInit {
 
   private http = inject(HttpClient);
   private fb = inject(FormBuilder);
-  protected readonly Gender = Gender;
+  protected readonly genders = Gender;
+  public isUpdate = false;
 
   public artistForm: FormGroup;
 
@@ -40,12 +40,13 @@ export class ArtistComponent implements OnInit {
 
   constructor() {
     this.artistForm = this.fb.group({
+      id:'',
       name: '',
       dob: '',
       gender: '',
       address: '',
-      first_release_year: '',
-      no_of_albums_released: '',
+      firstReleaseYear: '',
+      noOfAlbumsReleased: '',
     })
   }
 
@@ -57,26 +58,54 @@ export class ArtistComponent implements OnInit {
     this.http.get(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.ARTIST}/${ApiConst.FIND_ALL}`)
       .subscribe({
         next: (res: any) => {
+          console.log('list')
           this.artistList.set(res);
+          this.isUpdate = false;
+          this.visible = false;
         }
       })
   }
 
-  openDialog() {
+  openDialog(selectedArtist: ArtistInterface | null = null) {
     this.visible = true;
-  }
-
-  editArtist(artist: ArtistInterface) {
-    this.visible = true;
-    this.artistForm.patchValue(artist);
-  }
-
-  deleteArtist(artist: any) {
-
+    if(selectedArtist) {
+      this.isUpdate = true;
+      this.artistForm.patchValue({...selectedArtist, dob: new Date(selectedArtist.dob)});
+    }
+    selectedArtist ? this.isUpdate = true : null;
   }
 
   addArtist() {
+    this.http.post(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.ARTIST}/${ApiConst.SAVE}`, this.artistForm.getRawValue())
+      .subscribe({
+        next: (res) => {
+          console.log(res)
+          if(res) return;
+          this.fetchArtist();
+        }
+      })
   }
 
-  protected readonly genders = Gender;
+  updateArtist() {
+    this.http.put(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.ARTIST}/${ApiConst.UPDATE}`, this.artistForm.getRawValue())
+      .subscribe({
+        next: (res) => {
+          console.log('res',res)
+          if(!res) return;
+          this.fetchArtist();
+        }
+      })
+  }
+
+  deleteArtist(artist: ArtistInterface) {
+    this.http.delete(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.ARTIST}/${artist.id}`)
+      .subscribe({
+        next: (res) => {
+          if(!res) return;
+          this.fetchArtist();
+        }
+      })
+  }
+
+
 }

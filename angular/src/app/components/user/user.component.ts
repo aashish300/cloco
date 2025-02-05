@@ -71,6 +71,7 @@ export class UserComponent implements OnInit {
       .subscribe({
         next: (res) => {
           this.userList.set(res);
+          this.isUpdate = false;
         }
       })
   }
@@ -109,9 +110,10 @@ export class UserComponent implements OnInit {
   deleteUser(user: UserInterface) {
     this.http.delete(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.USER}/${user.id}`)
       .subscribe({
-        next: () => {
-
-        }
+        next: () => {},
+        complete: () => {
+          this.fetchUser();
+        },
       })
   }
 

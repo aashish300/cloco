@@ -46,16 +46,17 @@ public class ArtistRepositoryImpl extends BaseRepositoryImpl<ArtistEntity> imple
 
     @Override
     public boolean update(ArtistEntity artist) {
-        String rawQuery = "UPDATE " + tableName + " SET name = ?, dob = ?, gender = ?::gender_enum, address = ?, first_release_year = ?, no_of_albums_released = ?, updated_at = ?"
+        String rawQuery = "UPDATE " + tableName + " SET name = ?, dob = ?, gender = COALESCE(?::gender_enum, gender), address = ?, first_release_year = ?, no_of_albums_released = ?, updated_at = ?"
                 + " WHERE id = ?";
         int result = update(rawQuery, new Object[]{
                 artist.getName(),
                 artist.getDob(),
                 artist.getGender() != null ? artist.getGender().name() : null,
                 artist.getAddress(),
+                artist.getFirstReleaseYear() != null ? artist.getFirstReleaseYear().getValue() : null,
                 artist.getNoOfAlbumsReleased(),
-                artist.getFirstReleaseYear(),
-                artist.getUpdatedAt()
+                artist.getUpdatedAt(),
+                artist.getId()
         });
         return result != 0;
     }

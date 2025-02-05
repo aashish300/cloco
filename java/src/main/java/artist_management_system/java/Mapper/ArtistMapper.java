@@ -14,6 +14,7 @@ public class ArtistMapper {
         return (rs, rowNum) -> {
             ArtistEntity artist = new ArtistEntity();
             artist.setId(rs.getInt("id"));
+            artist.setName(rs.getString("name"));
             artist.setDob(rs.getDate("dob"));
             artist.setAddress(rs.getString("address"));
             artist.setGender(rs.getString("gender") != null ? Gender.valueOf(rs.getString("gender")) : null);
