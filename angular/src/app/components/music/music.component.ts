@@ -8,6 +8,7 @@ import {DropdownModule} from "primeng/dropdown";
 import {PrimeTemplate} from "primeng/api";
 import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {MusicInterface} from "../../model/music.interface";
+import {ArtistInterface} from "../../model/artist.interface";
 
 @Component({
   selector: 'app-music',
@@ -32,19 +33,30 @@ export class MusicComponent implements OnInit {
   public songList: WritableSignal<MusicInterface[]> = signal([] as MusicInterface[]);
   public musicForm: FormGroup;
   public isUpdate = false;
+  public artistDetails!: ArtistInterface;
 
   constructor() {
     this.musicForm = this.fb.group({
       id: '',
       title: '',
-      album_name: '',
+      albumName: '',
       genre: ''
     })
   }
 
 
   ngOnInit() {
-    this.fetchSong(this.route.snapshot.params['id']);
+    this.fetchArtistById(this.route.snapshot.params['id']);
+  }
+
+  public fetchArtistById(id: number) {
+    this.http.get(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.ARTIST}/${id}`)
+      .subscribe({
+        next: (res: any) => {
+          this.artistDetails = res?.data;
+          this.fetchSong(this.route.snapshot.params['id']);
+        }
+      })
   }
 
   public fetchSong(id: number) {
@@ -52,7 +64,7 @@ export class MusicComponent implements OnInit {
       .subscribe({
         next: (res: any) => {
           if(!res) return;
-          this.songList.set(res?.music);
+          this.songList.set(res?.data);
           this.visible = false;
           this.musicForm.reset();
         }
@@ -71,31 +83,39 @@ export class MusicComponent implements OnInit {
   }
 
   addMusic() {
-    this.http.post(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.MUSIC}/${ApiConst.SAVE}`, this.musicForm.getRawValue())
+    const payload = {
+      ...this.musicForm.getRawValue(),
+      artist: this.artistDetails
+    }
+    this.http.post(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.MUSIC}/${ApiConst.SAVE}`, payload)
       .subscribe({
         next: (res) => {
           if(!res) return;
-          this.fetchSong(3);
+          this.fetchSong(this.artistDetails.id);
         }
       })
   }
 
   updateMusic() {
-    this.http.put(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.MUSIC}/${ApiConst.UPDATE}`, this.musicForm.getRawValue())
+    const payload = {
+      ...this.musicForm.getRawValue(),
+      artist: this.artistDetails
+    }
+    this.http.put(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.MUSIC}/${ApiConst.UPDATE}`, payload)
       .subscribe({
         next: (res) => {
           if(!res) return;
-          this.fetchSong(1);
+          this.fetchSong(this.artistDetails.id);
         }
       })
   }
 
   deleteMusic(music: MusicInterface) {
-    this.http.delete(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.MUSIC}/${music.id}`, this.musicForm.getRawValue())
+    this.http.delete(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.MUSIC}/${music.id}`)
       .subscribe({
         next: (res) => {
           if(!res) return;
-          this.fetchSong(1);
+          this.fetchSong(this.artistDetails.id);
         }
       })
   }

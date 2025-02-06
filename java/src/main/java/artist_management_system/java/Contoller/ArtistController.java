@@ -91,6 +91,7 @@ public class ArtistController {
     }
 
     @PostMapping(ApiConstant.CSV_UPLOAD)
+    @PreAuthorize("hasAnyAuthority('super_admin', 'artist_manager')")
     public ResponseEntity uploadFile(@RequestParam("file") MultipartFile file) {
         try {
             boolean result = this.artistService.saveAllCSV(file);
@@ -104,6 +105,7 @@ public class ArtistController {
     }
 
     @GetMapping(ApiConstant.CSV_EXPORT)
+    @PreAuthorize("hasAnyAuthority('super_admin', 'artist_manager')")
     public ResponseEntity<Map<String, Object>> exportFile(HttpServletResponse response) {
         try {
             this.artistService.exportCSV(response);

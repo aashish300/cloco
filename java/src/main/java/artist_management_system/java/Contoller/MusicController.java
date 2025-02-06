@@ -25,29 +25,29 @@ public class MusicController {
     }
 
     @PostMapping(ApiConstant.SAVE)
-    @PreAuthorize("hasAuthority('super_admin')")
-    public ResponseEntity<String> save(@RequestBody MusicEntity music) {
+    @PreAuthorize("hasAnyAuthority('super_admin', 'artist')")
+    public ResponseEntity<Map<String, Object>> save(@RequestBody MusicEntity music) {
         MusicEntity musicEntity = this.musicService.save(music);
         if (musicEntity == null) {
-            return new ResponseEntity<>("Music not registered", HttpStatus.CONFLICT);
+            return new ResponseEntity<>(Map.of("message","Music not registered"), HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>("Music registered successfully", HttpStatus.CREATED);
+        return new ResponseEntity<>(Map.of("message","Music registered successfully"), HttpStatus.CREATED);
     }
 
     @PutMapping(ApiConstant.UPDATE)
-    @PreAuthorize("hasAuthority('super_admin')")
-    public ResponseEntity<String> update(@RequestBody MusicEntity music) {
+    @PreAuthorize("hasAnyAuthority('super_admin', 'artist')")
+    public ResponseEntity<Map<String, Object>> update(@RequestBody MusicEntity music) {
         MusicEntity musicEntity = this.musicService.update(music);
 
         if (musicEntity == null) {
-            return new ResponseEntity<>("Music not Found", HttpStatus.CONFLICT);
+            return new ResponseEntity<>(Map.of("message","Music not Found"), HttpStatus.CONFLICT);
         }
 
-        return new ResponseEntity<>("Music Updated Successfully!!!", HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("message","Music Updated Successfully!!!"), HttpStatus.OK);
     }
 
     @GetMapping(ApiConstant.ID)
-    @PreAuthorize("hasAuthority('super_admin')")
+    @PreAuthorize("hasAnyAuthority('super_admin', 'artist')")
     public ResponseEntity<Map<String, Object>> findById(@PathVariable("id") Integer id) {
         MusicEntity musicEntity = this.musicService.findById(id);
         if (musicEntity == null) {
@@ -59,12 +59,12 @@ public class MusicController {
 
     @DeleteMapping(ApiConstant.ID)
     @PreAuthorize("hasAuthority('super_admin')")
-    public ResponseEntity<String> deleteById(@PathVariable("id") Integer id) {
+    public ResponseEntity<Map<String, Object>> deleteById(@PathVariable("id") Integer id) {
         boolean result = this.musicService.deleteById(id);
         if (!result) {
-            return new ResponseEntity<>("artist not Found", HttpStatus.CONFLICT);
+            return new ResponseEntity<>(Map.of("message","artist not Found"), HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>("artist Deleted Successfully", HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("message","artist Deleted Successfully"), HttpStatus.OK);
     }
 
     @GetMapping(ApiConstant.FINDALLBYPAGINATION)
@@ -89,6 +89,7 @@ public class MusicController {
     }
 
     @GetMapping(ApiConstant.MUSICBYARTISTID)
+    @PreAuthorize("hasAnyAuthority('super_admin', 'artist_manager', 'artist')")
     public ResponseEntity<Map<String , Object>> findMusicByArtistId(@PathVariable("id") Integer artistId) {
         List<MusicEntity> musicEntityList = this.musicService.findMusicByArtistId(artistId);
         if (musicEntityList.isEmpty()) {

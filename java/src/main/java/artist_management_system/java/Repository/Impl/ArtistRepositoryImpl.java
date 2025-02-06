@@ -37,7 +37,8 @@ public class ArtistRepositoryImpl extends BaseRepositoryImpl<ArtistEntity> imple
                 artist.getAddress(),
                 artist.getFirstReleaseYear() != null ? artist.getFirstReleaseYear().getValue() : null,
                 artist.getNoOfAlbumsReleased(),
-                artist.getCreatedAt(),
+                new java.util.Date(),
+
         });
         return result != 0;
     }
@@ -60,7 +61,7 @@ public class ArtistRepositoryImpl extends BaseRepositoryImpl<ArtistEntity> imple
                 artist.getAddress(),
                 artist.getFirstReleaseYear() != null ? artist.getFirstReleaseYear().getValue() : null,
                 artist.getNoOfAlbumsReleased(),
-                artist.getUpdatedAt(),
+                new java.util.Date(),
                 artist.getId()
         });
         return result != 0;
@@ -107,45 +108,4 @@ public class ArtistRepositoryImpl extends BaseRepositoryImpl<ArtistEntity> imple
 
         return batchUpdate(rawQuery, batchArgs);
     }
-
-    //    public void importCsv(MultipartFile file) {
-//        try (Reader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
-//            CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader());
-//
-//            List<Object[]> batchArgs = new ArrayList<>();
-//            for (CSVRecord record : csvParser) {
-//                Long id = Long.parseLong(record.get("id"));
-//                String name = record.get("name");
-//                String genre = record.get("genre");
-//
-//                batchArgs.add(new Object[]{id, name, genre});
-//            }
-//
-//            // Bulk Insert using JdbcTemplate
-//            String sql = "INSERT INTO artists (id, name, genre) VALUES (?, ?, ?)";
-//            jdbcTemplate.batchUpdate(sql, batchArgs);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            throw new RuntimeException("Failed to import CSV file: " + e.getMessage());
-//        }
-//    }
-//
-//    public void exportCsv(HttpServletResponse response) throws IOException {
-//        response.setContentType("text/csv");
-//        response.setHeader("Content-Disposition", "attachment; filename=artists.csv");
-//
-//        PrintWriter writer = response.getWriter();
-//        CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader("id", "name", "genre"));
-//
-//        // Fetch data from DB
-//        List<Map<String, Object>> artists = jdbcTemplate.queryForList("SELECT * FROM artists");
-//
-//        for (Map<String, Object> artist : artists) {
-//            csvPrinter.printRecord(artist.get("id"), artist.get("name"), artist.get("genre"));
-//        }
-//
-//        csvPrinter.flush();
-//        csvPrinter.close();
-//    }
 }

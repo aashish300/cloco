@@ -18,6 +18,9 @@
       <th scope="col" class="px-6 py-3">
         Genre
       </th>
+      <th scope="col" class="px-6 py-3">
+        Action
+      </th>
     </tr>
     </thead>
     <tbody>
@@ -30,7 +33,7 @@
             {{ song.title }}
           </td>
           <td class="px-6 py-4">
-            {{ song.album_name }}
+            {{ song.albumName }}
           </td>
           <td class="px-6 py-4">
             {{ song.genre }}
@@ -62,7 +65,7 @@
           <input
             type="text"
             id="album_name"
-            formControlName="album_name"
+            formControlName="albumName"
             placeholder="Enter album name"
           >
         </div>

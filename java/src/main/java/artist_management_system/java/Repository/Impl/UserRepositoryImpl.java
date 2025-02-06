@@ -36,7 +36,8 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserEntity>  implemen
                 user.getRole() != null ? user.getRole().name() : null,
                 user.getAddress(),
                 user.getToken(),
-                user.getCreatedAt(),
+                new Date()
+
         });
         return result != 0;
     }
