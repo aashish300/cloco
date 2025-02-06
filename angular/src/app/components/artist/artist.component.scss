@@ -2,3 +2,15 @@
   display: flex;
   gap: 20px;
 }
+
+nav {
+  ul {
+    display: flex;
+    li {
+      padding: 5px 10px;
+      a {
+        width: 100%;
+      }
+    }
+  }
+}

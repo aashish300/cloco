@@ -32,6 +32,7 @@ export class ArtistComponent implements OnInit {
   private http = inject(HttpClient);
   private fb = inject(FormBuilder);
   private router: Router = inject(Router);
+  public pages = [];
   // private excelService = inject(ExcelService);
 
   protected readonly genders = Gender;
@@ -61,7 +62,7 @@ export class ArtistComponent implements OnInit {
   }
 
   fetchArtist() {
-    this.http.get(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.ARTIST}/${ApiConst.FIND_ALL}`)
+    this.http.get(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.ARTIST}/${ApiConst.FIND_ALL_BY_PAGINATION}?page=1&size=5`)
       .subscribe({
         next: (res: any) => {
           this.artistList.set(res?.list);
@@ -77,9 +78,9 @@ export class ArtistComponent implements OnInit {
     formData.append('file', event.target.files[0]);
 
     this.http.post(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.ARTIST}/${ApiConst.CSV}/${ApiConst.UPLOAD}`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
+      // headers: {
+      //   'Content-Type': 'multipart/form-data'
+      // }
     })
       .subscribe({
         next: (res: any) => {

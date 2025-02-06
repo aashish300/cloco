@@ -6,19 +6,18 @@ import artist_management_system.java.Service.IArtistService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.apache.commons.csv.CSVParser;
-
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @Transactional
@@ -72,12 +71,17 @@ public class ArtistServiceImpl implements IArtistService {
 
     @Override
     public boolean saveAllCSV(MultipartFile file) {
-        if (!Objects.equals(file.getContentType(), "text/csv")) {
-            return false;
-        }
-        try (BufferedReader bReader = new BufferedReader(new InputStreamReader(file.getInputStream(), "UTF-8"));
-             CSVParser csvParser = new CSVParser(bReader,
-                     CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim())) {
+//        if (!Objects.equals(file.getContentType(), "text/csv")) {
+//            return false;
+//        }
+        try (BufferedReader bReader = new BufferedReader(new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8));
+             CSVParser csvParser = CSVFormat.DEFAULT
+                     .builder()
+                     .setHeader()
+                     .setIgnoreHeaderCase(true)
+                     .setTrim(true)
+                     .build()
+                     .parse(bReader)) {
             this.artistRepository.saveAllCSV(csvParser);
             return true;
         } catch (IOException e) {

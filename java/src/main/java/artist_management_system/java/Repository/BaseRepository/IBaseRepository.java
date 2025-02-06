@@ -18,4 +18,6 @@ public interface IBaseRepository<T> {
 
     T queryForObject(String sql, Object[] args, RowMapper<T> rowMapper);
 
+    T queryForObject(String sql, Object[] arg);
+
 }

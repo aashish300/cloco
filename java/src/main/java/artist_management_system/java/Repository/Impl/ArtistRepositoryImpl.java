@@ -77,7 +77,7 @@ public class ArtistRepositoryImpl extends BaseRepositoryImpl<ArtistEntity> imple
 
     @Override
     public List<ArtistEntity> findAllByPagination(int limit, int offset) {
-        String rawQuery = "SELECT * FROM " + tableName + " ORDER BY name LIMIT = ? OFFSET = ?";
+        String rawQuery = "SELECT * FROM " + tableName + " ORDER BY name LIMIT ? OFFSET ?";
 
         return query(rawQuery, new Object[]{limit, offset}, artistMapper.getArtistEntityMapper());
     }
@@ -90,9 +90,17 @@ public class ArtistRepositoryImpl extends BaseRepositoryImpl<ArtistEntity> imple
     }
 
     @Override
+    public int findAllCount() {
+        String rawQuery = "SELECT COUNT(*) FROM " + tableName;
+
+        return queryForObject(rawQuery, Integer.class);
+    }
+
+    @Override
     public int[] saveAllCSV(CSVParser artistEntityList) {
         String rawQuery = "INSERT INTO " + tableName + " (name, dob, gender, address, first_release_year, no_of_albums_released, " +
                 "created_at) VALUES (?, ?, ?::gender_enum, ?, ?, ?, ?)";
+        System.err.println(artistEntityList);
         List<Object[]> batchArgs = new ArrayList<>();
         for (CSVRecord artist : artistEntityList) {
             batchArgs.add(new Object[]{
@@ -102,7 +110,7 @@ public class ArtistRepositoryImpl extends BaseRepositoryImpl<ArtistEntity> imple
                     artist.get("address"),
                     artist.get("first_release_year"),
                     artist.get("no_of_albums_released"),
-                    artist.get("created_at")
+                    new java.util.Date(),
             });
         }
 
