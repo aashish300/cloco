@@ -37,7 +37,7 @@ export class MusicComponent implements OnInit {
     this.musicForm = this.fb.group({
       id: '',
       title: '',
-      albums_name: '',
+      album_name: '',
       genre: ''
     })
   }
@@ -48,7 +48,7 @@ export class MusicComponent implements OnInit {
   }
 
   public fetchSong(id: number) {
-    this.http.get(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.ARTIST}/${id}`)
+    this.http.get(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.MUSIC}/${ApiConst.FIND_MUSIC_BY_ARTIST_ID}/${id}`)
       .subscribe({
         next: (res: any) => {
           if(!res) return;
@@ -75,7 +75,7 @@ export class MusicComponent implements OnInit {
       .subscribe({
         next: (res) => {
           if(!res) return;
-          this.fetchSong(1);
+          this.fetchSong(3);
         }
       })
   }

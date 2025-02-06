@@ -24,4 +24,6 @@ export const ApiConst = {
   CSV: 'csv',
   UPLOAD: 'upload',
 
+  FIND_MUSIC_BY_ARTIST_ID: 'findMusicByArtistId'
+
 };

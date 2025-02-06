@@ -59,4 +59,9 @@ public class MusicServiceImpl implements IMusicService {
     public List<MusicEntity> findAll() {
         return this.musicRepository.findAll();
     }
+
+    @Override
+    public List<MusicEntity> findMusicByArtistId(Integer artistId) {
+        return this.musicRepository.findMusicByArtistId(artistId);
+    }
 }

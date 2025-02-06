@@ -69,8 +69,8 @@ export class UserComponent implements OnInit {
   fetchUser() {
     this.http.get(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.USER}/${ApiConst.FIND_ALL}`)
       .subscribe({
-        next: (res) => {
-          this.userList.set(res);
+        next: (res: any) => {
+          this.userList.set(res?.data);
           this.isUpdate = false;
         }
       })
@@ -79,8 +79,12 @@ export class UserComponent implements OnInit {
   openDialog(selectedRow: any = null) {
     this.visible = true;
     this.userForm.reset();
-    this.userForm.patchValue({...selectedRow, dob: new Date(selectedRow.dob)});
-    selectedRow ? this.isUpdate = true : null;
+    if(selectedRow) {
+      this.userForm.patchValue({...selectedRow, dob: new Date(selectedRow.dob)});
+      this.isUpdate = true;
+    }else {
+      this.isUpdate = false;
+    }
   }
 
   addUser() {

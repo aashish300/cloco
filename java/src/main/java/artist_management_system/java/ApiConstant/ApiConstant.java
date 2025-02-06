@@ -13,6 +13,8 @@ public interface ApiConstant {
     String SAVE = "/save";
     String UPDATE = "/update";
     String FINDALLBYPAGINATION = "/findAllByPagination";
+    String MUSICBYARTISTID = "/findMusicByArtistId" + ID;
+
 
     String CSV_UPLOAD = "/csv/upload";
     String CSV_EXPORT = "/csv/export";

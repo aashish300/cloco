@@ -49,12 +49,12 @@ public class MusicController {
     @GetMapping(ApiConstant.ID)
     @PreAuthorize("hasAuthority('super_admin')")
     public ResponseEntity<Map<String, Object>> findById(@PathVariable("id") Integer id) {
-        MusicEntity MusicEntity = this.musicService.findById(id);
-        if (MusicEntity == null) {
+        MusicEntity musicEntity = this.musicService.findById(id);
+        if (musicEntity == null) {
             return new ResponseEntity<>(Map.of("message","artist not Found"), HttpStatus.CONFLICT);
         }
 
-        return new ResponseEntity<>(Map.of("data",MusicEntity), HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("data",musicEntity), HttpStatus.OK);
     }
 
     @DeleteMapping(ApiConstant.ID)
@@ -71,20 +71,29 @@ public class MusicController {
     @PreAuthorize("hasAuthority('super_admin')")
     public ResponseEntity<Map<String, Object>> findAllByPagination(@RequestParam("page") Integer page,
                                               @RequestParam("size") Integer size) {
-        List<MusicEntity> MusicEntityList = this.musicService.findAllByPagination(page, size);
-        if (MusicEntityList.isEmpty()) {
+        List<MusicEntity> musicEntityList = this.musicService.findAllByPagination(page, size);
+        if (musicEntityList.isEmpty()) {
             return new ResponseEntity<>(Map.of("message","List not available"), HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>(Map.of("data", MusicEntityList), HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("data", musicEntityList), HttpStatus.OK);
     }
 
     @GetMapping(ApiConstant.FINDALL)
     @PreAuthorize("hasAuthority('super_admin')")
     public ResponseEntity<Map<String, Object>> findAll() {
-        List<MusicEntity> MusicEntityList = this.musicService.findAll();
-        if (MusicEntityList.isEmpty()) {
+        List<MusicEntity> musicEntityList = this.musicService.findAll();
+        if (musicEntityList.isEmpty()) {
             return new ResponseEntity<>(Map.of("message","List not available"), HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>(Map.of("data",MusicEntityList), HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("data",musicEntityList), HttpStatus.OK);
+    }
+
+    @GetMapping(ApiConstant.MUSICBYARTISTID)
+    public ResponseEntity<Map<String , Object>> findMusicByArtistId(@PathVariable("id") Integer artistId) {
+        List<MusicEntity> musicEntityList = this.musicService.findMusicByArtistId(artistId);
+        if (musicEntityList.isEmpty()) {
+            return new ResponseEntity<>(Map.of("message","List not available"), HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<>(Map.of("data",musicEntityList), HttpStatus.OK);
     }
 }

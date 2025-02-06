@@ -19,6 +19,7 @@ public interface IMusicRepository extends IBaseRepository<MusicEntity> {
 
     List<MusicEntity> findAll();
 
-    MusicEntity findByArtistId(Integer artistId);
+    List<MusicEntity> findMusicByArtistId(Integer artistId);
+
 
 }

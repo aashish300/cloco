@@ -17,4 +17,7 @@ public interface IMusicService {
     List<MusicEntity> findAllByPagination(Integer page, Integer size);
 
     List<MusicEntity> findAll();
+
+    List<MusicEntity> findMusicByArtistId(Integer artistId);
+
 }

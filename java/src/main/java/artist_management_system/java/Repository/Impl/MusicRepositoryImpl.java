@@ -79,9 +79,9 @@ public class MusicRepositoryImpl extends BaseRepositoryImpl<MusicEntity> impleme
     }
 
     @Override
-    public MusicEntity findByArtistId(Integer artistId) {
+    public List<MusicEntity> findMusicByArtistId(Integer artistId) {
         String rawQuery = "SELECT * FROM " + tableName + " WHERE artist_id = ?";
 
-        return queryForObject(rawQuery, new Object[]{artistId}, musicMapper.getMusicEntityRowMapper());
+        return query(rawQuery, new Object[]{artistId}, musicMapper.getMusicEntityRowMapper());
     }
 }
