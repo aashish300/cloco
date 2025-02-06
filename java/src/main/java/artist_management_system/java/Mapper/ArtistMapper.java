@@ -18,6 +18,7 @@ public class ArtistMapper {
             artist.setDob(rs.getDate("dob"));
             artist.setAddress(rs.getString("address"));
             artist.setGender(rs.getString("gender") != null ? Gender.valueOf(rs.getString("gender")) : null);
+//            artist.setFirstReleaseYear(rs.getDate().getYear("first_release_year"));
             artist.setFirstReleaseYear(Year.of(rs.getInt("first_release_year")));
             artist.setNoOfAlbumsReleased(rs.getInt("no_of_albums_released"));
             return artist;

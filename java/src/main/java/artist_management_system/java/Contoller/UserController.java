@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(ApiConstant.USER)
@@ -26,76 +27,76 @@ public class UserController {
 
     @PostMapping(ApiConstant.SAVE)
     @PreAuthorize("hasAuthority('super_admin')")
-    public ResponseEntity<String> save(@RequestBody UserEntity user) {
+    public ResponseEntity<Map<String, Object>> save(@RequestBody UserEntity user) {
         UserEntity userEntity = this.userService.findByEmail(user.getEmail(), false);
         if (userEntity != null) {
-            return new ResponseEntity<>("User already exist", HttpStatus.CONFLICT);
+            return new ResponseEntity<>(Map.of("message","User already exist"), HttpStatus.CONFLICT);
         }
 
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         UserEntity userEntity1 = this.userService.save(user);
         if (userEntity1 == null) {
-            return new ResponseEntity<>("User not registered", HttpStatus.CONFLICT);
+            return new ResponseEntity<>(Map.of("message","User not registered"), HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
+        return new ResponseEntity<>(Map.of("message","User registered successfully"), HttpStatus.CREATED);
     }
 
     @PutMapping(ApiConstant.UPDATE)
     @PreAuthorize("hasAuthority('super_admin')")
-    public ResponseEntity<String> update(@RequestBody UserEntity user) {
+    public ResponseEntity<Map<String , Object>> update(@RequestBody UserEntity user) {
         UserEntity userEntity = this.userService.findByEmail(user.getEmail(), false);
         if (userEntity != null) {
-            return new ResponseEntity<>("User already exist", HttpStatus.CONFLICT);
+            return new ResponseEntity<>(Map.of("message","User already exist"), HttpStatus.CONFLICT);
         }
 
         UserEntity userEntity1 = this.userService.update(user);
         if (userEntity1 == null) {
-            return new ResponseEntity<>("User not Found", HttpStatus.CONFLICT);
+            return new ResponseEntity<>(Map.of("message","User not Found"), HttpStatus.CONFLICT);
         }
 
-        return new ResponseEntity<>("User Updated Successfully!!!", HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("message","User Updated Successfully!!!"), HttpStatus.OK);
     }
 
     @GetMapping(ApiConstant.ID)
     @PreAuthorize("hasAuthority('super_admin')")
-    public ResponseEntity findById(@PathVariable("id") Integer id) {
+    public ResponseEntity<Map<String , Object>> findById(@PathVariable("id") Integer id) {
         UserEntity userEntity = this.userService.findById(id);
         if (userEntity == null) {
-            return new ResponseEntity<>("User not Found", HttpStatus.CONFLICT);
+            return new ResponseEntity<>(Map.of("message","User not Found"), HttpStatus.CONFLICT);
         }
 
-        return new ResponseEntity<>(userEntity, HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("data",userEntity), HttpStatus.OK);
     }
 
     @DeleteMapping(ApiConstant.ID)
     @PreAuthorize("hasAuthority('super_admin')")
-    public ResponseEntity<String> deleteById(@PathVariable("id") Integer id) {
+    public ResponseEntity<Map<String , Object>> deleteById(@PathVariable("id") Integer id) {
         boolean result = this.userService.deleteById(id);
         if (!result) {
-            return new ResponseEntity<>("User not Found", HttpStatus.CONFLICT);
+            return new ResponseEntity<>(Map.of("message","User not Found"), HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>("User Deleted Successfully", HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("message","User Deleted Successfully"), HttpStatus.OK);
     }
 
     @GetMapping(ApiConstant.FINDALLBYPAGINATION)
     @PreAuthorize("hasAuthority('super_admin')")
-    public ResponseEntity findAllByPagination(@RequestParam("page") Integer page,
+    public ResponseEntity<Map<String , Object>> findAllByPagination(@RequestParam("page") Integer page,
                                               @RequestParam("size") Integer size) {
         List<UserEntity> userEntityList = this.userService.findAllByPagination(page, size);
         if (userEntityList.isEmpty()) {
-            return new ResponseEntity<>("List not available", HttpStatus.CONFLICT);
+            return new ResponseEntity<>(Map.of("message","List not available"), HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>(userEntityList, HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("data",userEntityList), HttpStatus.OK);
     }
 
     @GetMapping(ApiConstant.FINDALL)
     @PreAuthorize("hasAuthority('super_admin')")
-    public ResponseEntity findAll() {
+    public ResponseEntity<Map<String , Object>> findAll() {
         List<UserEntity> userEntityList = this.userService.findAll();
         if (userEntityList.isEmpty()) {
-            return new ResponseEntity<>("List not available", HttpStatus.CONFLICT);
+            return new ResponseEntity<>(Map.of("message","List not available"), HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>(userEntityList, HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("data",userEntityList), HttpStatus.OK);
     }
 }

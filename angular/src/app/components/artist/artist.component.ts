@@ -9,6 +9,8 @@ import {HttpClient} from "@angular/common/http";
 import {ApiConst} from "../../constants/ApiConst";
 import {ArtistInterface} from "../../model/artist.interface";
 import {Gender} from "../../utils/globa.utils";
+import {WorkBook} from "xlsx";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-artist',
@@ -29,13 +31,18 @@ export class ArtistComponent implements OnInit {
 
   private http = inject(HttpClient);
   private fb = inject(FormBuilder);
+  private router: Router = inject(Router);
+  // private excelService = inject(ExcelService);
+
   protected readonly genders = Gender;
   public isUpdate = false;
+  workbook: WorkBook | undefined;
 
   public artistForm: FormGroup;
 
   public visible = false;
   public artistList: WritableSignal<ArtistInterface[]> = signal([] as ArtistInterface[]);
+  public inputFile: any;
 
   constructor() {
     this.artistForm = this.fb.group({
@@ -65,13 +72,43 @@ export class ArtistComponent implements OnInit {
       })
   }
 
+  importCSV(event: any) {
+    console.log('file')
+    this.http.post(`${ApiConst.API}/${ApiConst.ARTIST}/${ApiConst.CSV}/${ApiConst.UPLOAD}`, event.target.files[0])
+      .subscribe({
+        next: (res: any) => {
+
+        }
+      })
+    // this.excelService.readExcel(event.target.files[0])
+    //   .subscribe({
+    //     next: (wb: WorkBook) => {
+    //       // workbook object containing routine workbook
+    //       this.workbook = wb;
+    //       // parse the excel wb json
+    //       const excelJson = this.excelService.getSheetAsJson(wb, 0);
+    //       console.log(excelJson);
+    //     },
+    //     error: () => {
+    //       console.log('ERROR');
+    //     }});
+    this.inputFile = null;
+  }
+
+  public exportCSV() {
+
+  }
+
+
   openDialog(selectedArtist: ArtistInterface | null = null) {
     this.visible = true;
     if(selectedArtist) {
       this.isUpdate = true;
       this.artistForm.patchValue({...selectedArtist, dob: new Date(selectedArtist.dob)});
+    }else {
+      this.isUpdate = false;
+      this.artistForm.reset();
     }
-    selectedArtist ? this.isUpdate = true : null;
   }
 
   addArtist() {
@@ -104,6 +141,10 @@ export class ArtistComponent implements OnInit {
           this.fetchArtist();
         }
       })
+  }
+
+  viewArtist(artist: ArtistInterface) {
+    this.router.navigate(['/artist', artist.id]);
   }
 
 

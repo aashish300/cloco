@@ -14,6 +14,9 @@ public interface ApiConstant {
     String UPDATE = "/update";
     String FINDALLBYPAGINATION = "/findAllByPagination";
 
+    String CSV_UPLOAD = "/csv/upload";
+    String CSV_EXPORT = "/csv/export";
+
     String LOGIN = "/login";
     String REGISTER = "/register";
 

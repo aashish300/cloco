@@ -4,10 +4,15 @@ import artist_management_system.java.Mapper.ArtistMapper;
 import artist_management_system.java.Model.ArtistEntity;
 import artist_management_system.java.Repository.BaseRepository.Impl.BaseRepositoryImpl;
 import artist_management_system.java.Repository.IArtistRepository;
+import artist_management_system.java.Utils.Enum.Gender;
 import jakarta.persistence.Table;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -81,6 +86,26 @@ public class ArtistRepositoryImpl extends BaseRepositoryImpl<ArtistEntity> imple
         String rawQuery = "SELECT * FROM " + tableName + " ORDER BY name";
 
         return query(rawQuery, new Object[]{}, artistMapper.getArtistEntityMapper());
+    }
+
+    @Override
+    public int[] saveAllCSV(CSVParser artistEntityList) {
+        String rawQuery = "INSERT INTO " + tableName + " (name, dob, gender, address, first_release_year, no_of_albums_released, " +
+                "created_at) VALUES (?, ?, ?::gender_enum, ?, ?, ?, ?)";
+        List<Object[]> batchArgs = new ArrayList<>();
+        for (CSVRecord artist : artistEntityList) {
+            batchArgs.add(new Object[]{
+                    artist.get("name"),
+                    Date.valueOf(artist.get("dob")),
+                    artist.get("gender") != null ? Gender.valueOf(artist.get("gender")) : null,
+                    artist.get("address"),
+                    artist.get("first_release_year"),
+                    artist.get("no_of_albums_released"),
+                    artist.get("created_at")
+            });
+        }
+
+        return batchUpdate(rawQuery, batchArgs);
     }
 
     //    public void importCsv(MultipartFile file) {

@@ -3,11 +3,13 @@ package artist_management_system.java.Contoller;
 import artist_management_system.java.ApiConstant.ApiConstant;
 import artist_management_system.java.Model.ArtistEntity;
 import artist_management_system.java.Service.IArtistService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -47,13 +49,13 @@ public class ArtistController {
 
     @GetMapping(ApiConstant.ID)
     @PreAuthorize("hasAnyAuthority('super_admin', 'artist_manager')")
-    public ResponseEntity findById(@PathVariable("id") Integer id) {
+    public ResponseEntity<Map<String, Object>> findById(@PathVariable("id") Integer id) {
         ArtistEntity ArtistEntity = this.artistService.findById(id);
         if (ArtistEntity == null) {
-            return new ResponseEntity<>("artist not SFound", HttpStatus.CONFLICT);
+            return new ResponseEntity<>(Map.of("message","artist not SFound"), HttpStatus.CONFLICT);
         }
 
-        return new ResponseEntity<>(ArtistEntity, HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("message", "Successfully fetched!!!", "data", ArtistEntity), HttpStatus.OK);
     }
 
     @DeleteMapping(ApiConstant.ID)
@@ -86,5 +88,28 @@ public class ArtistController {
         }
         return new ResponseEntity<>(Map.of("message","Successfully Fetched!!!", "list", artistEntityList), HttpStatus.OK);
 
+    }
+
+    @PostMapping(ApiConstant.CSV_UPLOAD)
+    public ResponseEntity uploadFile(@RequestParam("file") MultipartFile file) {
+        try {
+            boolean result = this.artistService.saveAllCSV(file);
+            if (result) {
+                return new ResponseEntity<>("The file is uploaded successfully!!!", HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Please upload an csv file!!!", HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("The file is not upload successfully!!!", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping(ApiConstant.CSV_EXPORT)
+    public ResponseEntity<Map<String, Object>> exportFile(HttpServletResponse response) {
+        try {
+            this.artistService.exportCSV(response);
+            return new ResponseEntity<>(Map.of("message","The file is exported successfully!!!"), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(Map.of("message","The file not exported!!!"), HttpStatus.BAD_REQUEST);
+        }
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(ApiConstant.MUSIC)
@@ -47,13 +48,13 @@ public class MusicController {
 
     @GetMapping(ApiConstant.ID)
     @PreAuthorize("hasAuthority('super_admin')")
-    public ResponseEntity findById(@PathVariable("id") Integer id) {
+    public ResponseEntity<Map<String, Object>> findById(@PathVariable("id") Integer id) {
         MusicEntity MusicEntity = this.musicService.findById(id);
         if (MusicEntity == null) {
-            return new ResponseEntity<>("artist not Found", HttpStatus.CONFLICT);
+            return new ResponseEntity<>(Map.of("message","artist not Found"), HttpStatus.CONFLICT);
         }
 
-        return new ResponseEntity<>(MusicEntity, HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("data",MusicEntity), HttpStatus.OK);
     }
 
     @DeleteMapping(ApiConstant.ID)
@@ -68,22 +69,22 @@ public class MusicController {
 
     @GetMapping(ApiConstant.FINDALLBYPAGINATION)
     @PreAuthorize("hasAuthority('super_admin')")
-    public ResponseEntity findAllByPagination(@RequestParam("page") Integer page,
+    public ResponseEntity<Map<String, Object>> findAllByPagination(@RequestParam("page") Integer page,
                                               @RequestParam("size") Integer size) {
         List<MusicEntity> MusicEntityList = this.musicService.findAllByPagination(page, size);
         if (MusicEntityList.isEmpty()) {
-            return new ResponseEntity<>("List not available", HttpStatus.CONFLICT);
+            return new ResponseEntity<>(Map.of("message","List not available"), HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>(MusicEntityList, HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("data", MusicEntityList), HttpStatus.OK);
     }
 
     @GetMapping(ApiConstant.FINDALL)
     @PreAuthorize("hasAuthority('super_admin')")
-    public ResponseEntity findAll() {
+    public ResponseEntity<Map<String, Object>> findAll() {
         List<MusicEntity> MusicEntityList = this.musicService.findAll();
         if (MusicEntityList.isEmpty()) {
-            return new ResponseEntity<>("List not available", HttpStatus.CONFLICT);
+            return new ResponseEntity<>(Map.of("message","List not available"), HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>(MusicEntityList, HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("data",MusicEntityList), HttpStatus.OK);
     }
 }

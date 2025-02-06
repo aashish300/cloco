@@ -9,6 +9,7 @@ export const ApiConst = {
   TOKEN: 'token',
   USER: 'user',
   ARTIST: 'artist',
+  MUSIC: 'music',
   SECRET: 'eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiU1VQRVJfQURNSU4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6InBvc3RncmVzIiwiaWF0IjoxNzM4MzE4MjgzfQ.3vcrG8tgeFvvF0Lnl1IUTQNFreAGfYMNwJC4fZLuAwY',
 
   // common
@@ -18,6 +19,9 @@ export const ApiConst = {
   SAVE: "save",
   UPDATE: "update",
   API: 'api',
-  DELETE: 'delete'
+  DELETE: 'delete',
+
+  CSV: 'csv',
+  UPLOAD: 'upload',
 
 };

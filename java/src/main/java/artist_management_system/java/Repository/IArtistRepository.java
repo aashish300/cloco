@@ -1,7 +1,9 @@
 package artist_management_system.java.Repository;
 
 import artist_management_system.java.Model.ArtistEntity;
+import org.apache.commons.csv.CSVParser;
 import artist_management_system.java.Repository.BaseRepository.IBaseRepository;
+
 
 import java.util.List;
 
@@ -18,4 +20,7 @@ public interface IArtistRepository extends IBaseRepository<ArtistEntity> {
     List<ArtistEntity> findAllByPagination(int limit, int offset);
 
     List<ArtistEntity> findAll();
+
+    int[] saveAllCSV(CSVParser artistEntityList);
+
 }

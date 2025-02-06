@@ -1,6 +1,12 @@
 <div class="btn-wrapper">
   <button class="btn" (click)="openDialog()">Add</button>
-  <button class="btn" (click)="openDialog()">Import CSV</button>
+  <button class="btn" (click)="triggerFileInput.click()">
+    <input #triggerFileInput single accept=".csv" type="file" (change)="importCSV($event)"
+           [(ngModel)]="inputFile" hidden>
+    <i class="ing-import-routine-icon"></i>
+    <p>Import CSV</p>
+  </button>
+  <button class="btn" (click)="exportCSV()">Export CSV</button>
 </div>
 
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -31,6 +37,9 @@
       <th scope="col" class="px-6 py-3">
         Actions
       </th>
+      <th scope="col" class="px-6 py-3">
+        Song View
+      </th>
     </tr>
     </thead>
     <tbody>
@@ -59,6 +68,9 @@
           </td>
           <td class="px-6 py-4">
             <button class="btn" (click)="openDialog(artist)">Edit</button>/<button class="btn" (click)="deleteArtist(artist)">Delete</button>
+          </td>
+          <td class="px-6 py-4">
+            <button (click)="viewArtist(artist)" class="btn">View</button>
           </td>
         </tr>
       }

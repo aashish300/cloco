@@ -34,4 +34,8 @@ public class BaseRepositoryImpl<T extends BaseEntity> implements IBaseRepository
     public T queryForObject(String sql, Object[] args, RowMapper<T> rowMapper) {
         return jdbcTemplate.queryForObject(sql, args, rowMapper);
     }
+
+    public int[] batchUpdate(String sql, List<Object[]> args) {
+        return jdbcTemplate.batchUpdate(sql, args);
+    }
 }

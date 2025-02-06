@@ -1,1 +1,87 @@
-<p>music works!</p>
+<div class="btn-wrapper">
+  <button class="btn" (click)="openDialog()">Add</button>
+</div>
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+    <tr>
+      <th scope="col" class="px-6 py-3">
+        S.N
+      </th>
+      <th scope="col" class="px-6 py-3">
+        Name
+      </th>
+      <th scope="col" class="px-6 py-3">
+        DOB
+      </th>
+      <th scope="col" class="px-6 py-3">
+        Gender
+      </th>
+      <th scope="col" class="px-6 py-3">
+        Address
+      </th>
+      <th scope="col" class="px-6 py-3">
+        First Release Year
+      </th>
+      <th scope="col" class="px-6 py-3">
+        No of Albums Released
+      </th>
+      <th scope="col" class="px-6 py-3">
+        Actions
+      </th>
+      <th scope="col" class="px-6 py-3">
+        Song View
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+      @for ( song of songList(); track song; let first = $first, index = $index) {
+        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+          <td class="px-6 py-4">
+            {{ index + 1 }}
+          </td>
+          <td class="px-6 py-4">
+            {{ song.title }}
+          </td>
+          <td class="px-6 py-4">
+            {{ song.album_name }}
+          </td>
+          <td class="px-6 py-4">
+            {{ song.genre }}
+          </td>
+          <td class="px-6 py-4">
+            <button class="btn" (click)="openDialog(song)">Edit</button>/<button class="btn" (click)="deleteMusic(song)">Delete</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+<p-dialog header="Artist Details" [(visible)]="visible" [modal]="true" [closable]="false">
+  <div class="wrapper">
+    <div class="login-card">
+      <form id="loginForm" [formGroup]="musicForm">
+        <div class="form-group">
+          <label for="title">Name</label>
+          <input
+            type="text"
+            id="title"
+            formControlName="name"
+            placeholder="Enter music title"
+          >
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <button class="btn" (click)="visible = false">Cancel</button>
+    @if (this.isUpdate) {
+      <button class="btn" (click)="updateMusic()">Update</button>
+    } @else {
+      <button class="btn" (click)="addMusic()">Save</button>
+    }
+  </ng-template>
+</p-dialog>
