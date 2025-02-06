@@ -73,8 +73,14 @@ export class ArtistComponent implements OnInit {
   }
 
   importCSV(event: any) {
-    console.log('file')
-    this.http.post(`${ApiConst.API}/${ApiConst.ARTIST}/${ApiConst.CSV}/${ApiConst.UPLOAD}`, event.target.files[0])
+    const formData = new FormData();
+    formData.append('file', event.target.files[0]);
+
+    this.http.post(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.ARTIST}/${ApiConst.CSV}/${ApiConst.UPLOAD}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
       .subscribe({
         next: (res: any) => {
 
