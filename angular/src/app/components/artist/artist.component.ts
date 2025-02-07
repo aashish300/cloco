@@ -32,8 +32,12 @@ export class ArtistComponent implements OnInit {
   private http = inject(HttpClient);
   private fb = inject(FormBuilder);
   private router: Router = inject(Router);
-  public pages = [];
-  // private excelService = inject(ExcelService);
+  public pagination = {
+    size: 2,
+    page: 1,
+    totalPagesList: [] as number[],
+    totalRow: 0
+  }
 
   protected readonly genders = Gender;
   public isUpdate = false;
@@ -62,15 +66,29 @@ export class ArtistComponent implements OnInit {
   }
 
   fetchArtist() {
-    this.http.get(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.ARTIST}/${ApiConst.FIND_ALL_BY_PAGINATION}?page=1&size=5`)
+    const { page, size } = this.pagination;
+    this.http.get(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.ARTIST}/${ApiConst.FIND_ALL_BY_PAGINATION}?page=${page}&size=${size}`)
       .subscribe({
         next: (res: any) => {
           this.artistList.set(res?.list);
+          const pages = [];
+          const page = Math.ceil(res?.totalCount / this.pagination.size);
+          for(let i=1; i<= page; i++) {
+            pages.push(i);
+          }
+          this.pagination.totalRow = res?.totalCount
+          this.pagination.totalPagesList = pages;
+
           this.artistForm.reset();
           this.isUpdate = false;
           this.visible = false;
         }
       })
+  }
+
+  goToPage(page: number) {
+    this.pagination.page = page;
+    this.fetchArtist();
   }
 
   importCSV(event: any) {

@@ -92,8 +92,8 @@ public class ArtistRepositoryImpl extends BaseRepositoryImpl<ArtistEntity> imple
     @Override
     public int findAllCount() {
         String rawQuery = "SELECT COUNT(*) FROM " + tableName;
-
-        return queryForObject(rawQuery, Integer.class);
+        List<ArtistEntity> artistEntityList = query(rawQuery, new Object[]{}, artistMapper.getArtistEntityMapper());
+        return artistEntityList.size();
     }
 
     @Override

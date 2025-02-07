@@ -73,10 +73,11 @@ public class ArtistController {
     public ResponseEntity<Map<String, Object>> findAllByPagination(@RequestParam("page") Integer page,
                                               @RequestParam("size") Integer size) {
         List<ArtistEntity> ArtistEntityList = this.artistService.findAllByPagination(page, size);
+        int count = this.artistService.findAll().size();
         if (ArtistEntityList.isEmpty()) {
             return new ResponseEntity<>(Map.of("message","List not available"), HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>(Map.of("message","Successfully Fetched!!!", "list", ArtistEntityList), HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("message","Successfully Fetched!!!", "list", ArtistEntityList, "totalCount", count), HttpStatus.OK);
     }
 
     @GetMapping(ApiConstant.FINDALL)
