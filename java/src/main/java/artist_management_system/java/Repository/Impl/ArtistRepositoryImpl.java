@@ -97,23 +97,23 @@ public class ArtistRepositoryImpl extends BaseRepositoryImpl<ArtistEntity> imple
     }
 
     @Override
-    public int[] saveAllCSV(CSVParser artistEntityList) {
+    public boolean saveAll(List<ArtistEntity> artistEntityList) {
+        int result = 0;
         String rawQuery = "INSERT INTO " + tableName + " (name, dob, gender, address, first_release_year, no_of_albums_released, " +
                 "created_at) VALUES (?, ?, ?::gender_enum, ?, ?, ?, ?)";
-        System.err.println(artistEntityList);
-        List<Object[]> batchArgs = new ArrayList<>();
-        for (CSVRecord artist : artistEntityList) {
-            batchArgs.add(new Object[]{
-                    artist.get("name"),
-                    Date.valueOf(artist.get("dob")),
-                    artist.get("gender") != null ? Gender.valueOf(artist.get("gender")) : null,
-                    artist.get("address"),
-                    artist.get("first_release_year"),
-                    artist.get("no_of_albums_released"),
+        for (ArtistEntity artist : artistEntityList) {
+            update(rawQuery, new Object[]{
+                    artist.getName(),
+                    artist.getDob(),
+                    artist.getGender() != null ? artist.getGender().name() : null,
+                    artist.getAddress(),
+                    artist.getFirstReleaseYear() != null ? artist.getFirstReleaseYear().getValue() : null,
+                    artist.getNoOfAlbumsReleased(),
                     new java.util.Date(),
             });
+            result = result + 1;
         }
 
-        return batchUpdate(rawQuery, batchArgs);
+        return result != 0;
     }
 }

@@ -93,10 +93,10 @@ public class ArtistController {
 
     @PostMapping(ApiConstant.CSV_UPLOAD)
     @PreAuthorize("hasAnyAuthority('super_admin', 'artist_manager')")
-    public ResponseEntity<Map<String, Object>> uploadFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<Map<String, Object>> uploadFile(@RequestBody List<ArtistEntity> artistEntityList) {
         try {
-            boolean result = this.artistService.saveAllCSV(file);
-            if (result) {
+            List<ArtistEntity> result = this.artistService.saveAll(artistEntityList);
+            if (result != null && !result.isEmpty()) {
                 return new ResponseEntity<>(Map.of("message","The file is uploaded successfully!!!"), HttpStatus.OK);
             }
             return new ResponseEntity<>(Map.of("message","Please upload an csv file!!!"), HttpStatus.BAD_REQUEST);

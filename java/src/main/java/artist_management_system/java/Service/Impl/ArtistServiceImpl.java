@@ -3,6 +3,9 @@ package artist_management_system.java.Service.Impl;
 import artist_management_system.java.Model.ArtistEntity;
 import artist_management_system.java.Repository.IArtistRepository;
 import artist_management_system.java.Service.IArtistService;
+import com.opencsv.CSVWriter;
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import org.apache.commons.csv.CSVFormat;
@@ -11,13 +14,12 @@ import org.apache.commons.csv.CSVPrinter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Writer;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Objects;
+import com.opencsv.CSVReader;
+
 
 @Service
 @Transactional
@@ -70,46 +72,70 @@ public class ArtistServiceImpl implements IArtistService {
     }
 
     @Override
-    public boolean saveAllCSV(MultipartFile file) {
-//        if (!Objects.equals(file.getContentType(), "text/csv")) {
-//            return false;
-//        }
-        try (BufferedReader bReader = new BufferedReader(new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8));
-             CSVParser csvParser = CSVFormat.DEFAULT
-                     .builder()
-                     .setHeader()
-                     .setIgnoreHeaderCase(true)
-                     .setTrim(true)
-                     .build()
-                     .parse(bReader)) {
-            this.artistRepository.saveAllCSV(csvParser);
-            return true;
-        } catch (IOException e) {
-            throw new RuntimeException("CSV data is failed to parse: " + e.getMessage());
+    public List<ArtistEntity> saveAll(List<ArtistEntity> artistEntityList) {
+        boolean result = artistRepository.saveAll(artistEntityList);
+        if (result) {
+            return artistEntityList;
         }
+        return null;
     }
+
+//    @Override
+//    public void exportCSV(HttpServletResponse response) throws IOException {
+//        response.setContentType("text/csv");
+//        response.addHeader("Content-Disposition", "attachment; filename=\"Artist.csv\"");
+//        List<ArtistEntity> artistEntityList = this.artistRepository.findAll();
+//        Writer writer = response.getWriter();
+//        try {
+//            CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT);
+//            for (ArtistEntity artist : artistEntityList) {
+//                printer.printRecord(
+//                        artist.getName(),
+//                        artist.getDob(),
+//                        artist.getGender() != null ? artist.getGender().name() : null,
+//                        artist.getAddress() != null ? artist.getAddress() : null,
+//                        artist.getNoOfAlbumsReleased() != null ? artist.getNoOfAlbumsReleased() : null,
+//                        artist.getFirstReleaseYear() != null ? artist.getFirstReleaseYear().toString() : null,
+//                        artist.getCreatedAt() != null ? artist.getCreatedAt().toString() : null,
+//                        artist.getUpdatedAt() != null ? artist.getUpdatedAt() : null);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     @Override
     public void exportCSV(HttpServletResponse response) throws IOException {
+
         response.setContentType("text/csv");
-        response.addHeader("Content-Disposition", "attachment; filename=\"Artist.csv\"");
+        response.setHeader("Content-Disposition",
+                "attachment; filename=\"" + "Artist.csv" + "\"");
+
+        String[] header = { "ID", "Name", "DOB", "Gender","Address", "No Of Albums Released", "First Release Year", "Created At", "Updated At" };
+
         List<ArtistEntity> artistEntityList = this.artistRepository.findAll();
-        Writer writer = response.getWriter();
-        try {
-            CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT);
+        try(CSVWriter writer = new CSVWriter(response.getWriter())) {
+
+            writer.writeNext(header);
+
+            // add data to csv
             for (ArtistEntity artist : artistEntityList) {
-                printer.printRecord(
+                writer.writeNext(new String[]{
+                        artist.getId().toString(),
                         artist.getName(),
-                        artist.getDob(),
+                        String.valueOf(artist.getDob()),
                         artist.getGender() != null ? artist.getGender().name() : null,
-                        artist.getAddress(),
-                        artist.getNoOfAlbumsReleased(),
-                        artist.getFirstReleaseYear(),
-                        artist.getCreatedAt(),
-                        artist.getUpdatedAt());
+                        artist.getAddress() != null ? artist.getAddress() : null,
+                        String.valueOf(artist.getNoOfAlbumsReleased() != null ? artist.getNoOfAlbumsReleased() : null),
+                        artist.getFirstReleaseYear() != null ? artist.getFirstReleaseYear().toString() : null,
+                        artist.getCreatedAt() != null ? artist.getCreatedAt().toString() : null,
+                        artist.getUpdatedAt() != null ? String.valueOf(artist.getUpdatedAt()) : null
+                });
+
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        }
+        catch (IOException e) {
+            throw new RuntimeException("Error while exporting CSV: " + e.getMessage(), e);
         }
     }
 }

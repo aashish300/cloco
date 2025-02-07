@@ -11,6 +11,10 @@ import {ArtistInterface} from "../../model/artist.interface";
 import {Gender} from "../../utils/globa.utils";
 import {WorkBook} from "xlsx";
 import {Router} from "@angular/router";
+import {ExcelService} from "../../services/excel.service";
+import {DatePipe} from "@angular/common";
+import saveAs from 'file-saver';
+
 
 @Component({
   selector: 'app-artist',
@@ -24,6 +28,7 @@ import {Router} from "@angular/router";
     PrimeTemplate,
     ReactiveFormsModule
   ],
+  providers: [ExcelService,DatePipe],
   templateUrl: './artist.component.html',
   styleUrl: './artist.component.scss'
 })
@@ -31,6 +36,7 @@ export class ArtistComponent implements OnInit {
 
   private http = inject(HttpClient);
   private fb = inject(FormBuilder);
+  private excelService: ExcelService = inject(ExcelService);
   private router: Router = inject(Router);
   public pagination = {
     size: 2,
@@ -92,37 +98,37 @@ export class ArtistComponent implements OnInit {
   }
 
   importCSV(event: any) {
-    const formData = new FormData();
-    formData.append('file', event.target.files[0]);
-
-    this.http.post(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.ARTIST}/${ApiConst.CSV}/${ApiConst.UPLOAD}`, formData, {
-      // headers: {
-      //   'Content-Type': 'multipart/form-data'
-      // }
-    })
+    this.excelService.readExcel(event.target.files[0])
       .subscribe({
-        next: (res: any) => {
+        next: (wb: WorkBook) => {
+          // workbook object containing routine workbook
+          this.workbook = wb;
+          // parse the excel wb json
+          const excelJson = this.excelService.getSheetAsJson(wb, 0);
+          this.http.post(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.ARTIST}/${ApiConst.CSV}/${ApiConst.UPLOAD}`, excelJson)
+            .subscribe({
+              next: (res: any) => {
+                this.fetchArtist();
+              }
+            })
 
-        }
-      })
-    // this.excelService.readExcel(event.target.files[0])
-    //   .subscribe({
-    //     next: (wb: WorkBook) => {
-    //       // workbook object containing routine workbook
-    //       this.workbook = wb;
-    //       // parse the excel wb json
-    //       const excelJson = this.excelService.getSheetAsJson(wb, 0);
-    //       console.log(excelJson);
-    //     },
-    //     error: () => {
-    //       console.log('ERROR');
-    //     }});
+        },
+        error: () => {
+          console.log('ERROR');
+        }});
     this.inputFile = null;
   }
 
   public exportCSV() {
+    this.http.get(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.ARTIST}/${ApiConst.CSV}/${ApiConst.EXPORT}`)
+      .subscribe({
+        next: (wb: any) => {
+          saveAs(wb, "Artist.csv")
+          console.log(wb, 'Artist.csv');
+        }
+      })
 
-  }
+    }
 
 
   openDialog(selectedArtist: ArtistInterface | null = null) {

@@ -21,7 +21,7 @@ public interface IArtistService {
 
     List<ArtistEntity> findAll();
 
-    boolean saveAllCSV(MultipartFile file);
+    List<ArtistEntity> saveAll(List<ArtistEntity> artistEntityList);
 
     void exportCSV(HttpServletResponse response) throws IOException;
 

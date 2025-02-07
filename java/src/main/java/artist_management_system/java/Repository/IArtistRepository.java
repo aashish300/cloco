@@ -23,6 +23,6 @@ public interface IArtistRepository extends IBaseRepository<ArtistEntity> {
 
     int findAllCount();
 
-    int[] saveAllCSV(CSVParser artistEntityList);
+    boolean saveAll(List<ArtistEntity> artistEntityList);
 
 }

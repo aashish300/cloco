@@ -1,12 +1,14 @@
-import {Injectable} from "@angular/core";
+import {inject, Injectable} from "@angular/core";
 import * as XLSX from 'xlsx';
 import {WorkBook} from 'xlsx';
 import {Observable, Subscriber} from 'rxjs';
+import {DatePipe} from "@angular/common";
 
 Injectable({ providedIn: "root" });
 export class ExcelService {
 
   workbook: any = {};
+  datePipe: DatePipe = inject(DatePipe);
 
   readExcel(excelFile: Blob): Observable<any> {
     const readFile = new FileReader();
@@ -29,11 +31,17 @@ export class ExcelService {
     });
   }
 
-  // getSheetAsJson(wb: WorkBook, index: number) {
-  //   // Use filter to return only those rows where at least one value is not an empty string or null/undefined
-  //   return XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[index]], { raw: false })
-  //     // trim all the header name
-  //     .map(row => Object.fromEntries(Object.entries(row).map(([key, value]) => [key.trim(), value])))
-  //     .filter(row=> Object.values(row).some(value=>typeof value === 'string'?value.trim()!="":!!value));
-  // }
+  getSheetAsJson(wb: WorkBook, index: number) {
+    // Use filter to return only those rows where at least one value is not an empty string or null/undefined
+    return XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[index]], { raw: false })
+      // trim all the header name
+    // @ts-ignore
+      .map(row => Object.fromEntries(Object.entries(row).map(([key, value]) => {
+        if(key === 'dob' && value) {
+          value = this.datePipe.transform(value as Date, 'yyyy-MM-dd');
+        }
+        return [key.trim(), value]
+      })))
+      .filter(row=> Object.values(row).some(value=>typeof value === 'string'?value.trim()!="":!!value));
+  }
 }
