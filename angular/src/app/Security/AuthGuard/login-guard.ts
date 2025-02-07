@@ -1,6 +1,6 @@
-import {inject} from "@angular/core";
-import {CanActivateFn, Router} from "@angular/router";
-import {AuthService} from "../../services/auth.service";
+import { inject } from '@angular/core';
+import { CanActivateFn, Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 export const loginGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
@@ -11,10 +11,17 @@ export const loginGuard: CanActivateFn = () => {
   if (!token) {
     console.log('No token found.');
     return true; // navigate to login page if not logged in
+  } else {
+    return false;
   }
 
   console.log('token found');
 
-  return router.navigate(['user']);
-
-}
+  // if (authService.currentUserRole() === 'super_admin') {
+  //   router.navigate(['/user']);
+  // } else if (authService.currentUserRole() === 'artist_manager') {
+  //   router.navigate(['/artist']);
+  // } else {
+  // }
+  // return router.navigate(['/artist']);
+};

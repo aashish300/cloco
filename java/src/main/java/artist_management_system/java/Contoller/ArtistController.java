@@ -48,7 +48,7 @@ public class ArtistController {
     }
 
     @GetMapping(ApiConstant.ID)
-    @PreAuthorize("hasAnyAuthority('super_admin', 'artist_manager')")
+    @PreAuthorize("hasAnyAuthority('super_admin', 'artist_manager', 'artist')")
     public ResponseEntity<Map<String, Object>> findById(@PathVariable("id") Integer id) {
         ArtistEntity ArtistEntity = this.artistService.findById(id);
         if (ArtistEntity == null) {
