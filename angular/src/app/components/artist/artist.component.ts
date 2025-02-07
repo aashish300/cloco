@@ -120,11 +120,21 @@ export class ArtistComponent implements OnInit {
   }
 
   public exportCSV() {
-    this.http.get(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.ARTIST}/${ApiConst.CSV}/${ApiConst.EXPORT}`)
+    this.http.get(`${ApiConst.SERVER_URL}/${ApiConst.API}/${ApiConst.ARTIST}/${ApiConst.CSV}/${ApiConst.EXPORT}`, {
+      responseType: 'blob'} )
       .subscribe({
-        next: (wb: any) => {
-          saveAs(wb, "Artist.csv")
-          console.log(wb, 'Artist.csv');
+        next: (response: any) => {
+          const blob = new Blob([response], { type: 'text/csv' });
+          const url = window.URL.createObjectURL(blob);
+          const anchor = document.createElement('a');
+          anchor.href = url;
+          anchor.download = 'Artist.csv';
+          anchor.click();
+          window.URL.revokeObjectURL(url);
+        },
+        error: (err) => {
+          console.log('ERROR');
+          console.log(err)
         }
       })
 

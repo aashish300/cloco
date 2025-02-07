@@ -110,11 +110,15 @@ public class ArtistServiceImpl implements IArtistService {
         response.setContentType("text/csv");
         response.setHeader("Content-Disposition",
                 "attachment; filename=\"" + "Artist.csv" + "\"");
+        response.setCharacterEncoding("UTF-8");
 
         String[] header = { "ID", "Name", "DOB", "Gender","Address", "No Of Albums Released", "First Release Year", "Created At", "Updated At" };
 
         List<ArtistEntity> artistEntityList = this.artistRepository.findAll();
-        try(CSVWriter writer = new CSVWriter(response.getWriter())) {
+        try(CSVWriter writer = new CSVWriter(response.getWriter(), CSVWriter.DEFAULT_SEPARATOR,
+                CSVWriter.NO_QUOTE_CHARACTER,
+                CSVWriter.NO_ESCAPE_CHARACTER,
+                CSVWriter.DEFAULT_LINE_END)) {
 
             writer.writeNext(header);
 
@@ -133,6 +137,7 @@ public class ArtistServiceImpl implements IArtistService {
                 });
 
             }
+            writer.flush();
         }
         catch (IOException e) {
             throw new RuntimeException("Error while exporting CSV: " + e.getMessage(), e);
