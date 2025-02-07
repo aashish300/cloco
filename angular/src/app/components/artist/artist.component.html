@@ -81,7 +81,7 @@
 <nav>
   <ul>
     @for(page of pagination.totalPagesList; track page) {
-      <li (click)="goToPage(page)">
+      <li (click)="goToPage(page)" [class.active]="page === pagination.page">
         <span>{{ page }}</span>
       </li>
     }
