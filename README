@@ -1,0 +1,34 @@
+## Angular setup
+
+port = 4200 since backend port restrictions are added.
+#RUN
+npm install --force
+
+## Java setup
+
+## PostgreSQL setup
+
+database name = "postgres"
+port = 5433
+
+## Project Description
+
+A super admin account should be created first to login
+
+While registering a new account role is not assigned and user can't be logged in.
+
+super_admin account should assign a role to the user
+
+#CSV format
+
+here is the sample of the CSV format to import artist information
+Name,DOB,Gender,Address,No Of Albums Released,First Release Year
+Aashish ,2/5/2025,m,gwarko,123,2000
+hello,2/2/2020,m,gwarko,122,2000
+hello,2/2/2020,m,gwarko,122,2000
+hello,2/2/2020,m,gwarko,122,2000
+hello,2/2/2020,m,gwarko,122,2000
+hello,2/2/2020,m,gwarko,122,2000
+hello,2/2/2020,m,gwarko,122,2000
+hello,2/2/2020,m,gwarko,122,2000
+hello,2/2/2020,m,gwarko,122,2000
