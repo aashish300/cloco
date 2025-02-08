@@ -10,24 +10,15 @@
     <form id="loginForm" [formGroup]="loginForm">
       <div class="form-group">
         <label for="email">Email</label>
-        <input
-          id="email"
-          formControlName="email"
-          placeholder="Enter your email"
-        >
+        <input id="email" formControlName="email" placeholder="Enter your email">
       </div>
 
       <div class="form-group">
         <label for="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          formControlName="password"
-          placeholder="Enter your password"
-        >
+        <input type="password" id="password" formControlName="password" placeholder="Enter your password">
       </div>
 
-      <button class="login-btn" id="loginButton" (click)="login()">
+      <button class="login-btn hover" [disabled]="loginForm.invalid" id="loginButton" (click)="login()">
         Sign in
       </button>
     </form>
@@ -38,5 +29,4 @@
   </div>
 </div>
 
-<p-toast/>
-
+<p-toast />

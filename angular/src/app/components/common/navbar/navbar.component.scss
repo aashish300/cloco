@@ -1,13 +1,15 @@
 .navbar_container {
   width: 100px;
 
-  .icon_container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .user {
+    grid-row: span 2;
+  }
 
-    .icon {
-      color: blue;
-    }
+  .artist {
+    grid-row: span 2;
+  }
+
+  .logout {
+    grid-row: 10/span 2;
   }
 }

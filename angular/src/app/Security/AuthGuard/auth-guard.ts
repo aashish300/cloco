@@ -1,6 +1,6 @@
-import {inject} from "@angular/core";
-import {CanActivateFn, Router} from "@angular/router";
-import {AuthService} from "../../services/auth.service";
+import { inject } from '@angular/core';
+import { CanActivateFn, Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 export const authGuard: CanActivateFn = (route) => {
   const router: Router = inject(Router);
@@ -8,12 +8,11 @@ export const authGuard: CanActivateFn = (route) => {
   authService.init();
   const token = authService.token();
 
-  const isAccess = route.data["roles"].includes(authService.currentUserRole());
+  const isAccess = route.data['roles'].includes(authService.currentUserRole());
 
   if (token && isAccess) {
     return true;
+  } else {
+    return false;
   }
-
-  return router.navigate(['login']);
-
-}
+};

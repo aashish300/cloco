@@ -52,5 +52,6 @@ export class AuthService {
 
   logout() {
     this.securityService.clearLocalStorage();
+    window.location.reload();
   }
 }

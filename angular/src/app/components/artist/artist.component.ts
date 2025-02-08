@@ -93,7 +93,7 @@ export class ArtistComponent implements OnInit {
           const pages = [];
           const page = Math.ceil(res?.totalCount / this.pagination.size);
           for (let i = 1; i <= page; i++) {
-            pages.push(i);
+          pages.push(i);
           }
           this.pagination.totalRow = res?.totalCount;
           this.pagination.totalPagesList = pages;
